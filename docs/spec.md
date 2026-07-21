@@ -307,8 +307,10 @@ frontend/
 | 13 | GitHub Actions CD | Deploy frontend to Vercel, backend to Railway on merge to `main` |
 | 14 | Deploy to production | Vercel (frontend), Railway (backend), Neon (database) |
 | 15 | README.md | Project overview, quick start, links to docs |
+| 16 | Make repo public | Switch from private to public on GitHub (enables free branch protection rules) |
+| 17 | Branch protection rules | Enable on `main`: require status checks (CI must pass), require branches up to date, no direct pushes. Must be done after task 12 (CI) so the status check exists to reference. |
 
-**DoD:** App deployed and accessible. CI/CD runs on PRs. Documentation site live on GitHub Pages.
+**DoD:** App deployed and accessible. CI/CD runs on PRs. Repo public with branch protection on `main`. Documentation site live on GitHub Pages.
 
 ## 8. Deployment Architecture
 

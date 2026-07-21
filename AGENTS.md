@@ -22,6 +22,13 @@ Spec: `docs/spec.md`
 - Stay within current sprint scope unless explicitly told otherwise
 - Branch naming: `feature/<sprint-name>` (e.g., `feature/backend-foundation`)
 - When sprint is complete, open a PR referencing the issue (e.g., "Closes #1")
+- After merging a PR, do NOT delete the feature branch — keep all branches preserved as an audit trail for presentation and review purposes
+
+## PR Workflow
+
+- All changes go through PRs — no direct pushes to `main`
+- After merging a PR, keep the feature branch (do not delete)
+- Preserve full commit history on feature branches
 
 ## Development Methodology
 
