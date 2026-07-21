@@ -19,8 +19,6 @@ Spec: `docs/spec.md`
 - Create and checkout the sprint branch before any implementation: `git checkout -b feature/<sprint-name>`
 - Reference `docs/spec.md` Section 7 for the current sprint plan
 - Track progress via the GitHub Issue checklist (check off tasks as completed)
-- Before opening the PR, verify all items in the GitHub Issue checklist are checked off
-- If any items are incomplete, address them or explicitly defer them before requesting review
 - Stay within current sprint scope unless explicitly told otherwise
 - Branch naming: `feature/<sprint-name>` (e.g., `feature/backend-foundation`)
 - When sprint is complete, open a PR referencing the issue (e.g., "Closes #1")
@@ -29,10 +27,8 @@ Spec: `docs/spec.md`
 ## PR Workflow
 
 - All changes go through PRs — no direct pushes to `main`
-- Always use **Squash and merge** when merging PRs into `main`
-- Reasoning: Keeps main history clean with one commit per feature. Individual commits preserved on feature branch for audit trail. Avoids noisy merge commits and intermediate fixup commits polluting main.
-- After raising a PR, present a manual review checklist to the user summarizing all changes for confirmation before merging. Include any deferred items from the sprint for visibility.
 - After merging a PR, keep the feature branch (do not delete)
+- Preserve full commit history on feature branches
 
 ## Manual Review Checklist
 
