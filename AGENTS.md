@@ -58,14 +58,22 @@ cd frontend && npm run build
 
 ### 2. Manual Verification — Check These
 
-Provide step-by-step instructions for the user to manually verify the new features in the browser. Include:
+Start the database, seed it, then start both dev servers:
+```bash
+# 1. Start PostgreSQL
+docker compose up -d
 
-- How to start the dev servers (backend + frontend)
-- Exact URLs to open
-- Step-by-step actions to perform
-- Expected result for each action
+# 2. Seed the database (idempotent — safe to run multiple times)
+python -m backend.seed
 
-Format as a numbered table: Step | Action | Expected Result.
+# 3. Start backend
+uvicorn backend.main:app --reload
+
+# 4. Start frontend (separate terminal)
+cd frontend && npm run dev
+```
+
+Open `http://localhost:3000` and verify the new features by performing step-by-step actions. Format as a numbered table: Step | Action | Expected Result.
 
 ### 3. Code Changes — Files Changed
 
