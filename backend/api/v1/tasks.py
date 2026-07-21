@@ -33,6 +33,7 @@ async def create_task(
         status=request.status,
         priority=request.priority,
         due_date=request.due_date,
+        created_by=current_user.id,
     )
     return task
 

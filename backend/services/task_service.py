@@ -19,13 +19,14 @@ class TaskService:
         self.session = session
         self.repo = TaskRepository(session)
 
-    async def create_task(self, title: str, description: str | None = None, status: TaskStatus = TaskStatus.TODO, priority: TaskPriority = TaskPriority.MEDIUM, due_date=None) -> Task:
+    async def create_task(self, title: str, description: str | None = None, status: TaskStatus = TaskStatus.TODO, priority: TaskPriority = TaskPriority.MEDIUM, due_date=None, created_by: str | None = None) -> Task:
         task = await self.repo.create(
             title=title,
             description=description,
             status=status,
             priority=priority,
             due_date=due_date,
+            created_by=created_by,
         )
         return await self.get_task(task.id)
 
