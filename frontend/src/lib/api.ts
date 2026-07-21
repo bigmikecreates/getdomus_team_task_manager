@@ -37,11 +37,50 @@ export interface TaskListResponse {
   total: number;
 }
 
+export interface StatusCount {
+  status: string;
+  count: number;
+}
+
+export interface PriorityCount {
+  priority: string;
+  count: number;
+}
+
+export interface AssigneeCount {
+  developer_id: string;
+  developer_name: string;
+  task_count: number;
+}
+
 export interface DashboardStats {
   total_tasks: number;
-  by_status: Record<string, number>;
-  by_priority: Record<string, number>;
-  total_developers: number;
+  by_status: StatusCount[];
+  by_priority: PriorityCount[];
+  by_assignee: AssigneeCount[];
+}
+
+export interface RecentTask {
+  id: string;
+  title: string;
+  status: string;
+  priority: string;
+}
+
+export interface UpcomingTask {
+  id: string;
+  title: string;
+  status: string;
+  priority: string;
+  due_date: string | null;
+}
+
+export interface DashboardOverview {
+  stats: DashboardStats;
+  overdue_tasks: number;
+  critical_tasks: number;
+  upcoming_tasks: UpcomingTask[];
+  recent_tasks: RecentTask[];
 }
 
 export interface LoginRequest {
@@ -146,4 +185,5 @@ export const developers = {
 
 export const dashboard = {
   stats: () => apiFetch<DashboardStats>("/api/dashboard/stats"),
+  overview: () => apiFetch<DashboardOverview>("/api/dashboard/overview"),
 };

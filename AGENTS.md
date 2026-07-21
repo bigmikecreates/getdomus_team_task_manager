@@ -34,6 +34,59 @@ Spec: `docs/spec.md`
 - After raising a PR, present a manual review checklist to the user summarizing all changes for confirmation before merging. Include any deferred items from the sprint for visibility.
 - After merging a PR, keep the feature branch (do not delete)
 
+## Manual Review Checklist
+
+After raising a PR, present the following to the user before merging. The user runs these checks themselves to verify the sprint is complete.
+
+### 1. Automated Checks — Run These
+
+Provide the exact commands the user should run in the repo root (or correct subdirectory) with expected outcomes.
+
+```bash
+# Backend tests
+pytest -v
+# Expect: all tests passing, 0 warnings
+
+# Frontend tests
+cd frontend && npm run test
+# Expect: all tests passing
+
+# Frontend build
+cd frontend && npm run build
+# Expect: clean build, no errors, all routes compile
+```
+
+### 2. Manual Verification — Check These
+
+Start the database, seed it, then start both dev servers:
+```bash
+# 1. Start PostgreSQL
+docker compose up -d
+
+# 2. Seed the database (idempotent — safe to run multiple times)
+python -m backend.seed
+
+# 3. Start backend
+uvicorn backend.main:app --reload
+
+# 4. Start frontend (separate terminal)
+cd frontend && npm run dev
+```
+
+Open `http://localhost:3000` and verify the new features by performing step-by-step actions. Format as a numbered table: Step | Action | Expected Result.
+
+### 3. Code Changes — Files Changed
+
+List every file changed with a one-line summary of what changed. Group by backend/frontend/tests.
+
+### 4. Issue Checklist
+
+Confirm all items in the GitHub Issue checklist are checked off. List the issue URL.
+
+### 5. Deferred Items
+
+List any items explicitly deferred from the sprint, or state "None."
+
 ## Development Methodology
 
 - **SDD:** `docs/spec.md` is the source of truth. Implementation follows spec.
