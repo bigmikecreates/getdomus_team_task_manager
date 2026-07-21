@@ -40,4 +40,26 @@ export const handlers = [
   http.get("*/api/developers", () => {
     return HttpResponse.json([]);
   }),
+
+  http.get("*/api/dashboard/stats", () => {
+    return HttpResponse.json({
+      total_tasks: 0,
+      by_status: [],
+      by_priority: [],
+      by_assignee: [],
+    });
+  }),
+
+  http.get("*/api/dashboard/overview", () => {
+    return HttpResponse.json({
+      stats: {
+        total_tasks: 0,
+        by_status: [],
+        by_priority: [],
+        by_assignee: [],
+      },
+      recent_tasks: [],
+      overdue_tasks: 0,
+    });
+  }),
 ];
