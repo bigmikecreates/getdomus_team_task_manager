@@ -58,8 +58,10 @@ export const handlers = [
         by_priority: [],
         by_assignee: [],
       },
-      recent_tasks: [],
       overdue_tasks: 0,
+      critical_tasks: 0,
+      upcoming_tasks: [],
+      recent_tasks: [],
     });
   }),
 ];

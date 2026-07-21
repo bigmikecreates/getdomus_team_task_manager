@@ -60,6 +60,45 @@ class DashboardService:
     async def get_overview(self) -> dict:
         stats = await self.get_stats()
 
+        now = datetime.now(timezone.utc)
+
+        overdue_result = await self.session.execute(
+            select(func.count(Task.id)).where(
+                Task.due_date < now,
+                Task.status != TaskStatus.DONE,
+            )
+        )
+        overdue_tasks = overdue_result.scalar()
+
+        critical_result = await self.session.execute(
+            select(func.count(Task.id)).where(
+                Task.priority == TaskPriority.CRITICAL,
+                Task.status != TaskStatus.DONE,
+            )
+        )
+        critical_tasks = critical_result.scalar()
+
+        upcoming_result = await self.session.execute(
+            select(Task)
+            .where(
+                Task.due_date.isnot(None),
+                Task.due_date >= now,
+                Task.status != TaskStatus.DONE,
+            )
+            .order_by(Task.due_date.asc())
+            .limit(5)
+        )
+        upcoming_tasks = [
+            {
+                "id": str(t.id),
+                "title": t.title,
+                "status": t.status.value if hasattr(t.status, "value") else t.status,
+                "priority": t.priority.value if hasattr(t.priority, "value") else t.priority,
+                "due_date": t.due_date.isoformat() if t.due_date else None,
+            }
+            for t in upcoming_result.scalars().all()
+        ]
+
         recent_result = await self.session.execute(
             select(Task)
             .order_by(Task.created_at.desc())
@@ -75,17 +114,10 @@ class DashboardService:
             for t in recent_result.scalars().all()
         ]
 
-        now = datetime.now(timezone.utc)
-        overdue_result = await self.session.execute(
-            select(func.count(Task.id)).where(
-                Task.due_date < now,
-                Task.status != TaskStatus.DONE,
-            )
-        )
-        overdue_tasks = overdue_result.scalar()
-
         return {
             "stats": stats,
-            "recent_tasks": recent_tasks,
             "overdue_tasks": overdue_tasks,
+            "critical_tasks": critical_tasks,
+            "upcoming_tasks": upcoming_tasks,
+            "recent_tasks": recent_tasks,
         }

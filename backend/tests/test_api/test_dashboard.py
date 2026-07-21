@@ -64,27 +64,60 @@ class TestDashboardAPI:
         assert response.status_code == 200
         data = response.json()
         assert "stats" in data
-        assert "recent_tasks" in data
         assert "overdue_tasks" in data
+        assert "critical_tasks" in data
+        assert "upcoming_tasks" in data
+        assert "recent_tasks" in data
 
-    async def test_dashboard_overview_recent_tasks(self, client: AsyncClient):
-        token = await _register_and_login(client, "recent@example.com")
+    async def test_dashboard_overview_critical_count(self, client: AsyncClient):
+        token = await _register_and_login(client, "critical@example.com")
         headers = {"Authorization": f"Bearer {token}"}
 
-        for i in range(3):
-            await client.post(
-                "/api/tasks",
-                json={"title": f"Recent Task {i}"},
-                headers=headers,
-            )
+        await client.post(
+            "/api/tasks",
+            json={"title": "Critical Task", "priority": "critical"},
+            headers=headers,
+        )
+        await client.post(
+            "/api/tasks",
+            json={"title": "Normal Task", "priority": "high"},
+            headers=headers,
+        )
 
         response = await client.get("/api/dashboard/overview", headers=headers)
         data = response.json()
 
-        assert len(data["recent_tasks"]) == 3
+        assert data["critical_tasks"] == 1
+
+    async def test_dashboard_overview_upcoming_tasks(self, client: AsyncClient):
+        token = await _register_and_login(client, "upcoming@example.com")
+        headers = {"Authorization": f"Bearer {token}"}
+
+        now = datetime.now(timezone.utc)
+        await client.post(
+            "/api/tasks",
+            json={
+                "title": "Soon Task",
+                "due_date": (now + timedelta(days=1)).isoformat(),
+            },
+            headers=headers,
+        )
+        await client.post(
+            "/api/tasks",
+            json={
+                "title": "Later Task",
+                "due_date": (now + timedelta(days=7)).isoformat(),
+            },
+            headers=headers,
+        )
+
+        response = await client.get("/api/dashboard/overview", headers=headers)
+        data = response.json()
+
+        assert len(data["upcoming_tasks"]) == 2
 
     async def test_dashboard_overview_overdue_count(self, client: AsyncClient):
-        token = await _register_and_login(client, "overdue@example.com")
+        token = await _register_and_login(client, "overdue2@example.com")
         headers = {"Authorization": f"Bearer {token}"}
 
         await client.post(

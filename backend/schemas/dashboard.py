@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 
 
@@ -24,7 +26,17 @@ class DashboardStats(BaseModel):
     by_assignee: list[AssigneeCount]
 
 
+class UpcomingTask(BaseModel):
+    id: str
+    title: str
+    status: str
+    priority: str
+    due_date: datetime | None = None
+
+
 class DashboardOverview(BaseModel):
     stats: DashboardStats
-    recent_tasks: list[dict]
     overdue_tasks: int
+    critical_tasks: int
+    upcoming_tasks: list[UpcomingTask]
+    recent_tasks: list[dict]

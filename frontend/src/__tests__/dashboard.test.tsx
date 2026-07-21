@@ -35,6 +35,13 @@ describe("Dashboard page", () => {
     });
   });
 
+  it("displays project health section", async () => {
+    renderWithQuery(<DashboardPage />);
+    await waitFor(() => {
+      expect(screen.getByText("Project Health")).toBeInTheDocument();
+    });
+  });
+
   it("displays total tasks stat card", async () => {
     renderWithQuery(<DashboardPage />);
     await waitFor(() => {
@@ -42,10 +49,19 @@ describe("Dashboard page", () => {
     });
   });
 
-  it("displays overdue tasks stat card", async () => {
+  it("displays task board section", async () => {
     renderWithQuery(<DashboardPage />);
     await waitFor(() => {
-      expect(screen.getByText("Overdue")).toBeInTheDocument();
+      expect(screen.getByText("Task Board")).toBeInTheDocument();
+    });
+  });
+
+  it("renders new task button", async () => {
+    renderWithQuery(<DashboardPage />);
+    await waitFor(() => {
+      expect(
+        screen.getByRole("link", { name: /\+ New Task/i })
+      ).toHaveAttribute("href", "/tasks/new");
     });
   });
 });

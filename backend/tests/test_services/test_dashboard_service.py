@@ -77,20 +77,6 @@ class TestDashboardService:
         assert by_assignee["Alice"] == 2
         assert by_assignee["Bob"] == 1
 
-    async def test_overview_includes_recent_tasks(self, db_session: AsyncSession):
-        service = DashboardService(db_session)
-
-        for i in range(3):
-            task = Task(title=f"Recent Task {i}")
-            db_session.add(task)
-        await db_session.flush()
-
-        overview = await service.get_overview()
-
-        assert "stats" in overview
-        assert "recent_tasks" in overview
-        assert len(overview["recent_tasks"]) == 3
-
     async def test_overview_counts_overdue_tasks(self, db_session: AsyncSession):
         service = DashboardService(db_session)
 
@@ -114,3 +100,53 @@ class TestDashboardService:
         overview = await service.get_overview()
 
         assert overview["overdue_tasks"] == 1
+
+    async def test_overview_counts_critical_tasks(self, db_session: AsyncSession):
+        service = DashboardService(db_session)
+
+        critical = Task(title="Critical", priority=TaskPriority.CRITICAL)
+        critical_done = Task(
+            title="Critical Done",
+            priority=TaskPriority.CRITICAL,
+            status=TaskStatus.DONE,
+        )
+        high = Task(title="High", priority=TaskPriority.HIGH)
+        db_session.add_all([critical, critical_done, high])
+        await db_session.flush()
+
+        overview = await service.get_overview()
+
+        assert overview["critical_tasks"] == 1
+
+    async def test_overview_upcoming_tasks(self, db_session: AsyncSession):
+        service = DashboardService(db_session)
+        now = datetime.now(timezone.utc)
+
+        t1 = Task(title="Soon", due_date=now + timedelta(days=1))
+        t2 = Task(title="Later", due_date=now + timedelta(days=7))
+        t3 = Task(
+            title="Done",
+            due_date=now + timedelta(days=2),
+            status=TaskStatus.DONE,
+        )
+        t4 = Task(title="No date")
+        db_session.add_all([t1, t2, t3, t4])
+        await db_session.flush()
+
+        overview = await service.get_overview()
+
+        assert len(overview["upcoming_tasks"]) == 2
+        assert overview["upcoming_tasks"][0]["title"] == "Soon"
+        assert overview["upcoming_tasks"][1]["title"] == "Later"
+
+    async def test_overview_recent_tasks(self, db_session: AsyncSession):
+        service = DashboardService(db_session)
+
+        for i in range(3):
+            task = Task(title=f"Recent Task {i}")
+            db_session.add(task)
+        await db_session.flush()
+
+        overview = await service.get_overview()
+
+        assert len(overview["recent_tasks"]) == 3

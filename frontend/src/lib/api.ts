@@ -67,10 +67,20 @@ export interface RecentTask {
   priority: string;
 }
 
+export interface UpcomingTask {
+  id: string;
+  title: string;
+  status: string;
+  priority: string;
+  due_date: string | null;
+}
+
 export interface DashboardOverview {
   stats: DashboardStats;
-  recent_tasks: RecentTask[];
   overdue_tasks: number;
+  critical_tasks: number;
+  upcoming_tasks: UpcomingTask[];
+  recent_tasks: RecentTask[];
 }
 
 export interface LoginRequest {
