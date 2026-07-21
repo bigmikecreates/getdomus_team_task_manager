@@ -7,7 +7,7 @@ validates the JWT, loads the User, and optionally enforces role access.
 from collections.abc import Callable
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -15,11 +15,11 @@ from backend.core.database import get_db
 from backend.core.security import decode_access_token
 from backend.models.user import User
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+http_bearer = HTTPBearer()
 
 
 async def get_current_user(
-    token: str = Depends(oauth2_scheme),
+    token_obj: str = Depends(http_bearer),
     db: AsyncSession = Depends(get_db),
 ) -> User:
     credentials_exception = HTTPException(
@@ -27,7 +27,7 @@ async def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    payload = decode_access_token(token)
+    payload = decode_access_token(token_obj.credentials)
     if payload is None:
         raise credentials_exception
     user_id: str | None = payload.get("sub")
