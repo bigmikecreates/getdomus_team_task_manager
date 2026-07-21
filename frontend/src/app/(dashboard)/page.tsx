@@ -22,6 +22,11 @@ function TaskRow({ task }: { task: Task }) {
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
       <td className="px-4 py-3">
+        <span className="font-mono text-xs text-gray-400">
+          {task.id.slice(0, 8)}
+        </span>
+      </td>
+      <td className="px-4 py-3">
         <Link
           href={`/tasks/${task.id}/edit`}
           className="font-medium text-blue-600 hover:underline"
@@ -92,6 +97,7 @@ export default function TaskListPage() {
           <table className="w-full text-left text-sm">
             <thead className="border-b border-gray-200 bg-gray-50">
               <tr>
+                <th className="px-4 py-3 font-medium">ID</th>
                 <th className="px-4 py-3 font-medium">Title</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Priority</th>
@@ -106,7 +112,7 @@ export default function TaskListPage() {
               {data.tasks.length === 0 && (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-4 py-8 text-center text-gray-500"
                   >
                     No tasks yet. Create one to get started.

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { tasks } from "@/lib/api";
+import { DeveloperMultiSelect } from "@/components/developer-multiselect";
 
 export default function NewTaskPage() {
   const router = useRouter();
@@ -13,9 +14,10 @@ export default function NewTaskPage() {
   const [status, setStatus] = useState("todo");
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState("");
+  const [assignedDeveloperIds, setAssignedDeveloperIds] = useState<string[]>([]);
   const [error, setError] = useState("");
 
-  const mutation = useMutation({
+  const createTask = useMutation({
     mutationFn: () =>
       tasks.create({
         title,
@@ -24,14 +26,26 @@ export default function NewTaskPage() {
         priority,
         due_date: dueDate ? new Date(dueDate).toISOString() : undefined,
       }),
-    onSuccess: () => {
+  });
+
+  const assignDevs = useMutation({
+    mutationFn: (taskId: string) => tasks.assign(taskId, assignedDeveloperIds),
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const newTask = await createTask.mutateAsync();
+      if (assignedDeveloperIds.length > 0) {
+        await assignDevs.mutateAsync(newTask.id);
+      }
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       router.push("/");
-    },
-    onError: (err) => {
+    } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create task");
-    },
-  });
+    }
+  };
 
   return (
     <div className="mx-auto max-w-lg">
@@ -41,14 +55,7 @@ export default function NewTaskPage() {
           {error}
         </div>
       )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setError("");
-          mutation.mutate();
-        }}
-        className="space-y-4 rounded-lg bg-white p-6 shadow"
-      >
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg bg-white p-6 shadow">
         <div>
           <label htmlFor="title" className="mb-1 block text-sm font-medium">
             Title *
@@ -62,10 +69,7 @@ export default function NewTaskPage() {
           />
         </div>
         <div>
-          <label
-            htmlFor="description"
-            className="mb-1 block text-sm font-medium"
-          >
+          <label htmlFor="description" className="mb-1 block text-sm font-medium">
             Description
           </label>
           <textarea
@@ -94,10 +98,7 @@ export default function NewTaskPage() {
             </select>
           </div>
           <div>
-            <label
-              htmlFor="priority"
-              className="mb-1 block text-sm font-medium"
-            >
+            <label htmlFor="priority" className="mb-1 block text-sm font-medium">
               Priority
             </label>
             <select
@@ -125,13 +126,26 @@ export default function NewTaskPage() {
             className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">
+            Assign Developers
+          </label>
+          <div className="rounded border border-gray-200 p-2">
+            <DeveloperMultiSelect
+              selectedIds={assignedDeveloperIds}
+              onChange={setAssignedDeveloperIds}
+            />
+          </div>
+        </div>
         <div className="flex gap-3 pt-2">
           <button
             type="submit"
-            disabled={mutation.isPending}
+            disabled={createTask.isPending || assignDevs.isPending}
             className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
           >
-            {mutation.isPending ? "Creating..." : "Create Task"}
+            {createTask.isPending || assignDevs.isPending
+              ? "Creating..."
+              : "Create Task"}
           </button>
           <button
             type="button"

@@ -140,7 +140,7 @@ export const tasks = {
 };
 
 export const developers = {
-  list: () => apiFetch<{ developers: Developer[]; total: number }>("/api/developers"),
+  list: () => apiFetch<Developer[]>("/api/developers"),
   get: (id: string) => apiFetch<Developer>(`/api/developers/${id}`),
 };
 

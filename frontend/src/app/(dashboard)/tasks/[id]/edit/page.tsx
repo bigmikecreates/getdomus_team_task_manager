@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { tasks, type Task } from "@/lib/api";
+import { DeveloperMultiSelect } from "@/components/developer-multiselect";
 
 export default function EditTaskPage() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function EditTaskPage() {
   const [status, setStatus] = useState("todo");
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState("");
+  const [assignedDeveloperIds, setAssignedDeveloperIds] = useState<string[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -31,10 +33,11 @@ export default function EditTaskPage() {
       setStatus(task.status);
       setPriority(task.priority);
       setDueDate(task.due_date ? task.due_date.split("T")[0] : "");
+      setAssignedDeveloperIds(task.developers.map((d) => d.id));
     }
   }, [task]);
 
-  const mutation = useMutation({
+  const updateTask = useMutation({
     mutationFn: () =>
       tasks.update(taskId, {
         title,
@@ -43,15 +46,30 @@ export default function EditTaskPage() {
         priority,
         due_date: dueDate ? new Date(dueDate).toISOString() : undefined,
       }),
-    onSuccess: () => {
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await updateTask.mutateAsync();
+
+      const originalIds = task?.developers.map((d) => d.id) ?? [];
+      const toAdd = assignedDeveloperIds.filter((id) => !originalIds.includes(id));
+      const toRemove = originalIds.filter((id) => !assignedDeveloperIds.includes(id));
+
+      await Promise.all([
+        ...toAdd.map((id) => tasks.assign(taskId, [id])),
+        ...toRemove.map((id) => tasks.unassign(taskId, id)),
+      ]);
+
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", taskId] });
       router.push("/");
-    },
-    onError: (err) => {
+    } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update task");
-    },
-  });
+    }
+  };
 
   if (isLoading) {
     return <p className="text-sm text-gray-500">Loading task...</p>;
@@ -69,14 +87,7 @@ export default function EditTaskPage() {
           {error}
         </div>
       )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setError("");
-          mutation.mutate();
-        }}
-        className="space-y-4 rounded-lg bg-white p-6 shadow"
-      >
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg bg-white p-6 shadow">
         <div>
           <label htmlFor="title" className="mb-1 block text-sm font-medium">
             Title *
@@ -90,10 +101,7 @@ export default function EditTaskPage() {
           />
         </div>
         <div>
-          <label
-            htmlFor="description"
-            className="mb-1 block text-sm font-medium"
-          >
+          <label htmlFor="description" className="mb-1 block text-sm font-medium">
             Description
           </label>
           <textarea
@@ -122,10 +130,7 @@ export default function EditTaskPage() {
             </select>
           </div>
           <div>
-            <label
-              htmlFor="priority"
-              className="mb-1 block text-sm font-medium"
-            >
+            <label htmlFor="priority" className="mb-1 block text-sm font-medium">
               Priority
             </label>
             <select
@@ -153,13 +158,24 @@ export default function EditTaskPage() {
             className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">
+            Assigned Developers
+          </label>
+          <div className="rounded border border-gray-200 p-2">
+            <DeveloperMultiSelect
+              selectedIds={assignedDeveloperIds}
+              onChange={setAssignedDeveloperIds}
+            />
+          </div>
+        </div>
         <div className="flex gap-3 pt-2">
           <button
             type="submit"
-            disabled={mutation.isPending}
+            disabled={updateTask.isPending}
             className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
           >
-            {mutation.isPending ? "Saving..." : "Save Changes"}
+            {updateTask.isPending ? "Saving..." : "Save Changes"}
           </button>
           <button
             type="button"

@@ -38,6 +38,6 @@ export const handlers = [
   }),
 
   http.get("*/api/developers", () => {
-    return HttpResponse.json({ developers: [], total: 0 });
+    return HttpResponse.json([]);
   }),
 ];

@@ -34,7 +34,7 @@ export default function DevelopersPage() {
               </tr>
             </thead>
             <tbody>
-              {data.developers.map((dev) => (
+              {data.map((dev) => (
                 <tr
                   key={dev.id}
                   className="border-b border-gray-100 hover:bg-gray-50"
@@ -49,7 +49,7 @@ export default function DevelopersPage() {
                   </td>
                 </tr>
               ))}
-              {data.developers.length === 0 && (
+              {data.length === 0 && (
                 <tr>
                   <td
                     colSpan={4}
