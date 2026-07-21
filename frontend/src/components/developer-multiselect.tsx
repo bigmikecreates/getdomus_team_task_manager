@@ -25,7 +25,9 @@ export function DeveloperMultiSelect({
   const filtered = allDevs.filter(
     (d) =>
       d.name.toLowerCase().includes(search.toLowerCase()) ||
-      d.timezone.toLowerCase().includes(search.toLowerCase())
+      d.timezone.toLowerCase().includes(search.toLowerCase()) ||
+      (d.working_hours_start && d.working_hours_start.includes(search)) ||
+      (d.working_hours_end && d.working_hours_end.includes(search))
   );
 
   const selected = allDevs.filter((d) => selectedIds.includes(d.id));
@@ -132,7 +134,12 @@ export function DeveloperMultiSelect({
                       )}
                     </span>
                     <span className="flex-1">{dev.name}</span>
-                    <span className="text-xs text-gray-400">{dev.timezone}</span>
+                    <span className="text-xs text-gray-400">
+                      {dev.timezone}
+                      {dev.working_hours_start && dev.working_hours_end
+                        ? ` · ${dev.working_hours_start.slice(0, 5)}–${dev.working_hours_end.slice(0, 5)}`
+                        : ""}
+                    </span>
                   </button>
                 </li>
               );
