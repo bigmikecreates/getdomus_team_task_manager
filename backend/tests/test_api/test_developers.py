@@ -24,6 +24,19 @@ class TestDevelopersAPI:
         data = response.json()
         assert isinstance(data, list)
 
+    async def test_list_developers_includes_availability_fields(self, client: AsyncClient):
+        token = await _register_and_login(client, "viewer2@example.com")
+        headers = {"Authorization": f"Bearer {token}"}
+
+        response = await client.get("/api/developers", headers=headers)
+        assert response.status_code == 200
+        data = response.json()
+        if len(data) > 0:
+            dev = data[0]
+            assert "is_online" in dev
+            assert "is_within_working_hours" in dev
+            assert "local_time" in dev
+
     async def test_create_developer_requires_admin(self, client: AsyncClient):
         token = await _register_and_login(client, "nonadmin@example.com")
         headers = {"Authorization": f"Bearer {token}"}

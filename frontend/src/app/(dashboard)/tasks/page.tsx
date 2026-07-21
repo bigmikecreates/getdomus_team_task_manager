@@ -141,11 +141,25 @@ export default function TaskListPage() {
         </select>
       </div>
 
-      {isLoading && <p className="text-sm text-gray-500">Loading tasks...</p>}
+      {isLoading && (
+        <div className="space-y-3">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-12 animate-pulse rounded bg-gray-100" />
+          ))}
+        </div>
+      )}
       {error && (
-        <p className="text-sm text-red-600">
-          {error instanceof Error ? error.message : "Failed to load tasks"}
-        </p>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+          <p className="text-sm text-red-600">
+            {error instanceof Error ? error.message : "Failed to load tasks"}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-2 text-sm font-medium text-red-700 hover:underline"
+          >
+            Retry
+          </button>
+        </div>
       )}
 
       {data && (

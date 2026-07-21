@@ -4,19 +4,39 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from backend.core.database import get_db
 from backend.core.dependencies import get_current_user, require_role
 from backend.models.user import User
-from backend.schemas.developer import DeveloperCreate, DeveloperUpdate, DeveloperResponse
+from backend.schemas.developer import DeveloperCreate, DeveloperUpdate, DeveloperResponse, DeveloperWithAvailability
 from backend.services.developer_service import DeveloperService
+from backend.services.presence_service import PresenceService
 
 router = APIRouter(prefix="/api/developers", tags=["developers"])
 
 
-@router.get("", response_model=list[DeveloperResponse])
+@router.get("", response_model=list[DeveloperWithAvailability])
 async def list_developers(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     service = DeveloperService(db)
-    return await service.list_developers()
+    devs = await service.list_developers()
+    presence = PresenceService(db)
+    availability = await presence.get_availability_bulk()
+    result = []
+    for dev in devs:
+        avail = availability.get(dev.id, {})
+        result.append(DeveloperWithAvailability(
+            id=dev.id,
+            name=dev.name,
+            email=dev.email,
+            timezone=dev.timezone,
+            working_hours_start=dev.working_hours_start,
+            working_hours_end=dev.working_hours_end,
+            created_at=dev.created_at,
+            updated_at=dev.updated_at,
+            is_online=avail.get("is_online", False),
+            is_within_working_hours=avail.get("is_within_working_hours", False),
+            local_time=avail.get("local_time", ""),
+        ))
+    return result
 
 
 @router.post("", response_model=DeveloperResponse, status_code=status.HTTP_201_CREATED)

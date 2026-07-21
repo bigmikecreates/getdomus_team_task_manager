@@ -19,6 +19,12 @@ export interface Developer {
   updated_at: string;
 }
 
+export interface DeveloperWithAvailability extends Developer {
+  is_online: boolean;
+  is_within_working_hours: boolean;
+  local_time: string;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -179,8 +185,15 @@ export const tasks = {
 };
 
 export const developers = {
-  list: () => apiFetch<Developer[]>("/api/developers"),
+  list: () => apiFetch<DeveloperWithAvailability[]>("/api/developers"),
   get: (id: string) => apiFetch<Developer>(`/api/developers/${id}`),
+};
+
+export const presence = {
+  heartbeat: () =>
+    apiFetch<{ status: string }>("/api/presence/heartbeat", {
+      method: "POST",
+    }),
 };
 
 export const dashboard = {

@@ -100,14 +100,35 @@ export default function DashboardPage() {
   });
 
   if (isLoading) {
-    return <p className="text-sm text-gray-500">Loading dashboard...</p>;
+    return (
+      <div>
+        <h1 className="mb-6 text-2xl font-bold">Dashboard</h1>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-20 animate-pulse rounded-lg bg-gray-100" />
+          ))}
+        </div>
+        <div className="mt-8 h-48 animate-pulse rounded-lg bg-gray-100" />
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <p className="text-sm text-red-600">
-        {error instanceof Error ? error.message : "Failed to load dashboard"}
-      </p>
+      <div>
+        <h1 className="mb-6 text-2xl font-bold">Dashboard</h1>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+          <p className="text-sm text-red-600">
+            {error instanceof Error ? error.message : "Failed to load dashboard"}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-2 text-sm font-medium text-red-700 hover:underline"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
     );
   }
 

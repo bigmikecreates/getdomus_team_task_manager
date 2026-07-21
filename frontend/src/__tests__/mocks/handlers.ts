@@ -41,6 +41,10 @@ export const handlers = [
     return HttpResponse.json([]);
   }),
 
+  http.post("*/api/presence/heartbeat", () => {
+    return HttpResponse.json({ status: "ok" });
+  }),
+
   http.get("*/api/dashboard/stats", () => {
     return HttpResponse.json({
       total_tasks: 0,

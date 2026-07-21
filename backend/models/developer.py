@@ -1,6 +1,6 @@
-from datetime import time
+from datetime import datetime, time
 
-from sqlalchemy import String, Time
+from sqlalchemy import DateTime, String, Time
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.core.database import Base
@@ -15,6 +15,7 @@ class Developer(UUIDMixin, TimestampMixin, Base):
     timezone: Mapped[str] = mapped_column(String(50), nullable=False, default="UTC")
     working_hours_start: Mapped[time | None] = mapped_column(Time, nullable=True)
     working_hours_end: Mapped[time | None] = mapped_column(Time, nullable=True)
+    last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     tasks: Mapped[list["Task"]] = relationship(
         "Task",
