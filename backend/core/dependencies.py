@@ -1,3 +1,9 @@
+"""FastAPI dependency injectors for auth and RBAC.
+
+Used as `Depends()` parameters on protected routes. Each dependency
+validates the JWT, loads the User, and optionally enforces role access.
+"""
+
 from collections.abc import Callable
 
 from fastapi import Depends, HTTPException, status
@@ -35,6 +41,7 @@ async def get_current_user(
 
 
 def require_role(*allowed_roles: str) -> Callable:
+    """Return a dependency that restricts access to specific UserRole values."""
     async def role_checker(current_user: User = Depends(get_current_user)) -> User:
         if current_user.role not in allowed_roles:
             raise HTTPException(

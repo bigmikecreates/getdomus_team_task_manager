@@ -28,12 +28,11 @@ class TestDeveloperModel:
 
     async def test_developer_email_is_unique(self, db_session: AsyncSession):
         dev1 = Developer(name="Dev 1", email="same@example.com", timezone="UTC")
-        dev2 = Developer(name="Dev 2", email="same@example.com", timezone="UTC")
         db_session.add(dev1)
-        db_session.flush()
+        await db_session.flush()
 
         with pytest.raises(Exception):
-            db_session.add(dev2)
+            db_session.add(Developer(name="Dev 2", email="same@example.com", timezone="UTC"))
             await db_session.flush()
 
     async def test_developer_defaults_to_utc_timezone(self, db_session: AsyncSession):
@@ -74,12 +73,11 @@ class TestUserModel:
 
     async def test_user_email_is_unique(self, db_session: AsyncSession):
         user1 = User(email="dup@example.com", password_hash="hash1", role=UserRole.DEVELOPER)
-        user2 = User(email="dup@example.com", password_hash="hash2", role=UserRole.DEVELOPER)
         db_session.add(user1)
-        db_session.flush()
+        await db_session.flush()
 
         with pytest.raises(Exception):
-            db_session.add(user2)
+            db_session.add(User(email="dup@example.com", password_hash="hash2", role=UserRole.DEVELOPER))
             await db_session.flush()
 
     async def test_user_defaults_to_developer_role(self, db_session: AsyncSession):
@@ -184,8 +182,8 @@ class TestTaskAssignmentModel:
         assignment1 = TaskAssignment(task_id=task.id, developer_id=developer.id)
         db_session.add(assignment1)
         await db_session.flush()
+        db_session.expunge(assignment1)
 
-        assignment2 = TaskAssignment(task_id=task.id, developer_id=developer.id)
         with pytest.raises(Exception):
-            db_session.add(assignment2)
+            db_session.add(TaskAssignment(task_id=task.id, developer_id=developer.id))
             await db_session.flush()

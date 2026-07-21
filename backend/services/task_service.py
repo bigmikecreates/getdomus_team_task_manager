@@ -1,3 +1,10 @@
+"""Task business logic — creation, queries, and developer assignments.
+
+Coordinates TaskRepository for CRUD and TaskAssignment rows for the
+many-to-many developer ↔ task link. All methods share the caller's
+AsyncSession so they participate in the same transaction.
+"""
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 

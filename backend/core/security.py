@@ -1,3 +1,9 @@
+"""Password hashing (bcrypt) and JWT token utilities.
+
+Secret key and algorithm are loaded from Settings. Tokens embed the
+user ID in the `sub` claim and an expiry in `exp`.
+"""
+
 from datetime import datetime, timedelta, timezone
 
 import bcrypt

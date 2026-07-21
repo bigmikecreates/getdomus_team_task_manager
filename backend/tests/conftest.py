@@ -1,3 +1,12 @@
+"""Shared test fixtures for the entire backend test suite.
+
+Uses a session-scoped SQLite in-memory database (shared URI) so all
+tests share one schema but each db_session gets its own connection +
+transaction that is rolled back after the test, keeping tests isolated
+without rebuilding tables. The client fixture uses a separate session
+per API call and cleans all rows after each test.
+"""
+
 from collections.abc import AsyncGenerator
 
 import pytest
@@ -22,6 +31,7 @@ def anyio_backend():
 
 @pytest.fixture(scope="session")
 async def test_engine():
+    """Create the shared SQLite engine and schema once for the whole test session."""
     engine = create_async_engine(TEST_DATABASE_URL, echo=False)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -33,17 +43,29 @@ async def test_engine():
 
 @pytest.fixture
 async def db_session(test_engine) -> AsyncGenerator[AsyncSession, None]:
+    """Per-test session wrapped in a transaction that rolls back on teardown.
+
+    IntegrityError during flush can break the transaction; the
+    ``is_active`` check prevents a secondary rollback warning.
+    """
     connection = await test_engine.connect()
     transaction = await connection.begin()
     session_factory = async_sessionmaker(bind=connection, class_=AsyncSession, expire_on_commit=False)
     async with session_factory() as session:
         yield session
-    await transaction.rollback()
+    if transaction.is_active:
+        await transaction.rollback()
     await connection.close()
 
 
 @pytest.fixture
 async def client(test_engine) -> AsyncGenerator[AsyncClient, None]:
+    """httpx AsyncClient wired to the FastAPI app via ASGI transport.
+
+    Overrides ``get_db`` so each request gets its own session that
+    commits on success.  All rows are deleted after the test to keep
+    the shared schema clean.
+    """
     async def override_get_db():
         async with AsyncSession(bind=test_engine, expire_on_commit=False) as session:
             try:
