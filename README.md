@@ -188,4 +188,4 @@ See [Architectural Decisions](docs/technical/decisions.md) for full rationale.
 
 ## License
 
-Private — GetDomus Graduate Full-Stack Technical Assessment
+Proprietary — GetDomus Graduate Full-Stack Technical Assessment. All rights reserved.
