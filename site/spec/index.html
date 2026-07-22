@@ -1,0 +1,2215 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Task management app for distributed engineering teams">
+      
+      
+      
+        <link rel="canonical" href="https://bigmikecreates.github.io/getdomus_team_task_manager/spec/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>GetDomus Team Task Manager — Project Specification - GetDomus Team Task Manager</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getdomus-team-task-manager-project-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="GetDomus Team Task Manager" class="md-header__button md-logo" aria-label="GetDomus Team Task Manager" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GetDomus Team Task Manager
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GetDomus Team Task Manager — Project Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigmikecreates/getdomus_team_task_manager" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    bigmikecreates/getdomus_team_task_manager
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="GetDomus Team Task Manager" class="md-nav__button md-logo" aria-label="GetDomus Team Task Manager" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    GetDomus Team Task Manager
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigmikecreates/getdomus_team_task_manager" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    bigmikecreates/getdomus_team_task_manager
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/admin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Admin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical/api/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tech Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-domain-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Domain Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Domain Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User (Auth)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taskassignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TaskAssignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. API Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tasks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-backend-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Backend Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-frontend-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Frontend Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-sprint-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Sprint Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Sprint Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1-backend-foundation-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 1: Backend Foundation &amp; Database
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2-authentication-frontend-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 2: Authentication &amp; Frontend Shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3-dashboard-multi-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3: Dashboard &amp; Multi-Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4-timezones-onlineoffline-foundation-polish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 4: Timezones, Online/Offline Foundation &amp; Polish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-5-documentation-containerization-cicd-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 5: Documentation, Containerization, CI/CD &amp; Deploy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-deployment-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Deployment Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-deferred-features-future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Deferred Features (Future Enhancements)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-branching-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Branching Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-development-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Development Methodology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Development Methodology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specification-driven-development-sdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specification-Driven Development (SDD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-driven-development-tdd-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test-Driven Development (TDD) — Backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior-focused-testing-frontend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior-Focused Testing — Frontend
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="getdomus-team-task-manager-project-specification">GetDomus Team Task Manager — Project Specification<a class="headerlink" href="#getdomus-team-task-manager-project-specification" title="Permanent link">&para;</a></h1>
+<h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
+<p>A production-oriented task management web application designed for distributed engineering teams. Supports multi-developer assignment, timezone awareness, and role-based access control.</p>
+<h2 id="2-tech-stack">2. Tech Stack<a class="headerlink" href="#2-tech-stack" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend</td>
+<td>Next.js + TypeScript</td>
+<td>14+ (App Router)</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>Tailwind CSS</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td>State/Data</td>
+<td>React Query (TanStack Query)</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>FastAPI (Python)</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>SQLAlchemy (async)</td>
+<td>2.0+</td>
+</tr>
+<tr>
+<td>Migrations</td>
+<td>Alembic</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Pydantic v2</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>PostgreSQL</td>
+<td>15+</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>JWT (python-jose) + bcrypt</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Timezone</td>
+<td>pytz / zoneinfo</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Containerization</td>
+<td>Docker + Docker Compose</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>GitHub Actions</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Docs</td>
+<td>MKDocs + Material theme</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-domain-model">3. Domain Model<a class="headerlink" href="#3-domain-model" title="Permanent link">&para;</a></h2>
+<h3 id="developer">Developer<a class="headerlink" href="#developer" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>Primary key</td>
+</tr>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>Unique, required</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>String</td>
+<td>IANA identifier (e.g., <code>Europe/London</code>)</td>
+</tr>
+<tr>
+<td>role</td>
+<td>Enum</td>
+<td><code>admin</code>, <code>manager</code>, <code>developer</code></td>
+</tr>
+<tr>
+<td>working_hours_start</td>
+<td>Time</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>working_hours_end</td>
+<td>Time</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>last_seen_at</td>
+<td>DateTime</td>
+<td>For online/offline foundation</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>DateTime</td>
+<td>Auto</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>DateTime</td>
+<td>Auto</td>
+</tr>
+</tbody>
+</table>
+<h3 id="user-auth">User (Auth)<a class="headerlink" href="#user-auth" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>Primary key</td>
+</tr>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>Unique, required</td>
+</tr>
+<tr>
+<td>password_hash</td>
+<td>String</td>
+<td>bcrypt</td>
+</tr>
+<tr>
+<td>role</td>
+<td>Enum</td>
+<td><code>admin</code>, <code>manager</code>, <code>developer</code></td>
+</tr>
+<tr>
+<td>developer_id</td>
+<td>UUID</td>
+<td>FK → Developer (optional, links auth to profile)</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>DateTime</td>
+<td>Auto</td>
+</tr>
+</tbody>
+</table>
+<h3 id="task">Task<a class="headerlink" href="#task" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>Primary key</td>
+</tr>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Text</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Enum</td>
+<td><code>todo</code>, <code>in_progress</code>, <code>in_review</code>, <code>done</code></td>
+</tr>
+<tr>
+<td>priority</td>
+<td>Enum</td>
+<td><code>low</code>, <code>medium</code>, <code>high</code>, <code>critical</code></td>
+</tr>
+<tr>
+<td>due_date</td>
+<td>DateTime</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>created_by</td>
+<td>UUID</td>
+<td>FK → User</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>DateTime</td>
+<td>Auto</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>DateTime</td>
+<td>Auto</td>
+</tr>
+</tbody>
+</table>
+<h3 id="taskassignment">TaskAssignment<a class="headerlink" href="#taskassignment" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>task_id</td>
+<td>UUID</td>
+<td>FK → Task</td>
+</tr>
+<tr>
+<td>developer_id</td>
+<td>UUID</td>
+<td>FK → Developer</td>
+</tr>
+<tr>
+<td>assigned_at</td>
+<td>DateTime</td>
+<td>Auto</td>
+</tr>
+</tbody>
+</table>
+<p>Composite primary key: <code>(task_id, developer_id)</code></p>
+<h2 id="4-api-endpoints">4. API Endpoints<a class="headerlink" href="#4-api-endpoints" title="Permanent link">&para;</a></h2>
+<h3 id="auth">Auth<a class="headerlink" href="#auth" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/register</code></td>
+<td>Register new user</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/login</code></td>
+<td>Login, returns JWT</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/auth/me</code></td>
+<td>Current user profile</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/tasks</code></td>
+<td>All</td>
+<td>List tasks (filterable by status, priority, assignee)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/tasks</code></td>
+<td>admin, manager</td>
+<td>Create task</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/tasks/{id}</code></td>
+<td>All</td>
+<td>Get task detail</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/tasks/{id}</code></td>
+<td>admin, manager</td>
+<td>Update task</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/tasks/{id}/assign</code></td>
+<td>admin, manager</td>
+<td>Assign developer(s)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/tasks/{id}/assignments/{dev_id}</code></td>
+<td>admin, manager</td>
+<td>Unassign developer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="developers">Developers<a class="headerlink" href="#developers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/developers</code></td>
+<td>All</td>
+<td>List developers with local time</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/developers</code></td>
+<td>admin</td>
+<td>Create developer profile</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/developers/{id}</code></td>
+<td>admin</td>
+<td>Update developer</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/developers/{id}/availability</code></td>
+<td>All</td>
+<td>Check working hours status</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/dashboard/stats</code></td>
+<td>Task counts by status, priority</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/dashboard/overview</code></td>
+<td>Summary data for dashboard cards</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-backend-structure">5. Backend Structure<a class="headerlink" href="#5-backend-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>backend/
+  api/
+    __init__.py
+    v1/
+      __init__.py
+      auth.py
+      tasks.py
+      developers.py
+      dashboard.py
+  services/
+    __init__.py
+    auth_service.py
+    task_service.py
+    developer_service.py
+    dashboard_service.py
+  repositories/
+    __init__.py
+    task_repository.py
+    developer_repository.py
+    user_repository.py
+  models/
+    __init__.py
+    base.py
+    developer.py
+    user.py
+    task.py
+    task_assignment.py
+  schemas/
+    __init__.py
+    auth.py
+    task.py
+    developer.py
+    dashboard.py
+  core/
+    __init__.py
+    config.py
+    security.py
+    dependencies.py
+    database.py
+  main.py
+</code></pre></div>
+<h2 id="6-frontend-structure">6. Frontend Structure<a class="headerlink" href="#6-frontend-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>frontend/
+  app/
+    layout.tsx
+    page.tsx              ← Dashboard
+    login/page.tsx
+    register/page.tsx
+    tasks/
+      page.tsx            ← Task list / board
+      [id]/page.tsx       ← Task detail / edit
+    developers/
+      page.tsx            ← Developer list
+  components/
+    ui/                   ← Shared UI components (Button, Card, Modal, etc.)
+    layout/               ← Sidebar, Header, etc.
+    tasks/                ← TaskCard, TaskForm, TaskBoard, etc.
+    developers/           ← DeveloperCard, AvailabilityBadge, etc.
+    dashboard/            ← StatsCard, OverviewChart, etc.
+  hooks/
+    useAuth.ts
+    useTasks.ts
+    useDevelopers.ts
+    useDashboard.ts
+  lib/
+    api.ts                ← API client (fetch wrapper)
+    auth.ts               ← JWT token management
+    utils.ts              ← Timezone helpers, formatters
+  types/
+    index.ts              ← TypeScript interfaces matching backend schemas
+</code></pre></div>
+<h2 id="7-sprint-plan">7. Sprint Plan<a class="headerlink" href="#7-sprint-plan" title="Permanent link">&para;</a></h2>
+<h3 id="sprint-1-backend-foundation-database">Sprint 1: Backend Foundation &amp; Database<a class="headerlink" href="#sprint-1-backend-foundation-database" title="Permanent link">&para;</a></h3>
+<p><strong>Branch:</strong> <code>feature/backend-foundation</code>
+<strong>Goal:</strong> Working API with data models, running locally against Dockerized Postgres.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Task</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Configure <code>pyproject.toml</code></td>
+<td>FastAPI, SQLAlchemy, Alembic, Pydantic, uvicorn, psycopg2, python-jose, bcrypt, pytz, python-dotenv</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Backend project structure</td>
+<td>Create directory layout as defined in Section 5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Core config</td>
+<td><code>config.py</code> (env vars, settings), <code>database.py</code> (async engine, session), <code>security.py</code> (JWT helpers)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Models</td>
+<td>Developer, User, Task, TaskAssignment with relationships</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Alembic setup + initial migration</td>
+<td>Generate and apply migration</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Schemas</td>
+<td>Pydantic request/response models for all entities</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Repository layer</td>
+<td>CRUD operations for each model</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Service layer</td>
+<td>Business logic (create task, assign developer, etc.)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>API routes</td>
+<td>Auth, Tasks, Developers, Dashboard endpoints</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Seed script</td>
+<td>Sample developers + tasks + users for local dev</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Docker Compose</td>
+<td>PostgreSQL container only (no app containerization)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Test infrastructure</td>
+<td>pytest, pytest-asyncio, httpx, factory_boy, conftest.py with fixtures (test client, test DB session, auth helpers)</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Model tests</td>
+<td>Write tests for Developer, User, Task, TaskAssignment relationships and constraints alongside model creation</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>API endpoint tests</td>
+<td>Write tests for each endpoint (happy path + error cases) before implementing the endpoint</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Service layer tests</td>
+<td>Write tests for business logic (task creation, assignment, status transitions) before implementing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DoD:</strong> API runs, all endpoints return correct data, DB migrations apply cleanly, all endpoints have passing TDD tests, model and service tests exist.</p>
+<h3 id="sprint-2-authentication-frontend-shell">Sprint 2: Authentication &amp; Frontend Shell<a class="headerlink" href="#sprint-2-authentication-frontend-shell" title="Permanent link">&para;</a></h3>
+<p><strong>Branch:</strong> <code>feature/auth-frontend</code>
+<strong>Goal:</strong> RBAC auth system + Next.js app with basic task CRUD.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Task</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>User model + auth endpoints</td>
+<td>Register, login, JWT token generation</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>require_role()</code> dependency</td>
+<td>FastAPI dependency for role-based route protection</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Apply auth to all existing endpoints</td>
+<td>Protect routes per Section 4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Scaffold Next.js</td>
+<td>TypeScript, App Router, Tailwind CSS, React Query</td>
+</tr>
+<tr>
+<td>5</td>
+<td>API client + auth hooks</td>
+<td>Fetch wrapper with JWT header injection</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Login + register pages</td>
+<td>Form UI, redirect on success</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Layout shell</td>
+<td>Sidebar nav, "Logged in as X (role)" header</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Task list page</td>
+<td>Table view of tasks with status, priority, due date</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Task create/edit form</td>
+<td>Form to create + update tasks</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Developer list page</td>
+<td>Read-only list with name, email, timezone</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Role-aware navigation</td>
+<td>Admin sees developer management, developer sees only assigned tasks</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Seed script update</td>
+<td>Create admin, manager, developer users</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Frontend test setup</td>
+<td>Vitest, @testing-library/react, msw for API mocking</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Auth endpoint tests</td>
+<td>Test register, login, JWT validation, role enforcement before implementing</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Role middleware tests</td>
+<td>Test <code>require_role()</code> with each role before implementing</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>Frontend auth tests</td>
+<td>Behavior-focused tests for login form, register form, role-based rendering</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DoD:</strong> Can register, login, create/edit/view tasks. Role-based nav works. Auth endpoints have TDD tests. Frontend auth flow has behavior tests.</p>
+<h3 id="sprint-3-dashboard-multi-assignment">Sprint 3: Dashboard &amp; Multi-Assignment<a class="headerlink" href="#sprint-3-dashboard-multi-assignment" title="Permanent link">&para;</a></h3>
+<p><strong>Branch:</strong> <code>feature/dashboard-assignments</code>
+<strong>Goal:</strong> Dashboard with stats + ability to assign multiple developers to tasks.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Task</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dashboard stats API</td>
+<td>Task counts by status, priority, assignee</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Dashboard UI</td>
+<td>Stats cards + summary view</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Task board view</td>
+<td>Kanban-style columns: To Do, In Progress, In Review, Done</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Multi-assignment API</td>
+<td>Wire up assign/unassign endpoints</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Multi-select assignment UI</td>
+<td>Dropdown/multi-select on task detail</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Assigned developers display</td>
+<td>Show avatars/names on task cards</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Filtering + search</td>
+<td>Filter tasks by status, priority, assignee</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Dashboard stats tests</td>
+<td>Test stats calculation (counts by status, priority, assignee) before implementing dashboard endpoint</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Multi-assignment tests</td>
+<td>Test assign/unassign logic, duplicate assignment prevention before implementing</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>Frontend assignment tests</td>
+<td>Behavior tests: "allows manager to assign multiple developers to a task", "shows assigned developers on task card"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DoD:</strong> Dashboard shows stats. Kanban board works. Multi-assignment functional. Dashboard and assignment endpoints have TDD tests.</p>
+<h3 id="sprint-4-timezones-onlineoffline-foundation-polish">Sprint 4: Timezones, Online/Offline Foundation &amp; Polish<a class="headerlink" href="#sprint-4-timezones-onlineoffline-foundation-polish" title="Permanent link">&para;</a></h3>
+<p><strong>Branch:</strong> <code>feature/timezones-polish</code>
+<strong>Goal:</strong> Developer timezone awareness + UX polish + online/offline groundwork.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Task</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Developer local time display</td>
+<td>Show each developer's current local time using IANA timezone</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Due date timezone context</td>
+<td>Show due dates with timezone awareness</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>last_seen_at</code> field + heartbeat endpoint</td>
+<td>Foundation for online/offline status</td>
+</tr>
+<tr>
+<td>4</td>
+<td>WebSocket skeleton (stretch)</td>
+<td><code>/ws/presence</code> endpoint if time permits</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Presence indicator UI (stretch)</td>
+<td>Green/red dot next to developer name</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Working hours indicator</td>
+<td>Visual badge: within hours / outside hours</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Empty states</td>
+<td>"No tasks yet", "No developers assigned", etc.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Loading states</td>
+<td>Skeletons / spinners for all async operations</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Error handling</td>
+<td>Toast notifications, error boundaries</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Responsive design</td>
+<td>Mobile-friendly layouts</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Timezone tests</td>
+<td>Test IANA timezone conversion, due date display across timezones</td>
+</tr>
+<tr>
+<td>TDD</td>
+<td>Availability tests</td>
+<td>Test working hours calculation, edge cases (overnight hours, DST) before implementing indicator</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>Frontend behavior tests</td>
+<td>Test empty states render correctly, error boundaries catch failures, loading states display</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DoD:</strong> Timezones display correctly. UI is polished. Online/offline foundation in place. Timezone and availability logic has TDD tests.</p>
+<h3 id="sprint-5-documentation-containerization-cicd-deploy">Sprint 5: Documentation, Containerization, CI/CD &amp; Deploy<a class="headerlink" href="#sprint-5-documentation-containerization-cicd-deploy" title="Permanent link">&para;</a></h3>
+<p><strong>Branch:</strong> <code>feature/deploy-docs</code>
+<strong>Goal:</strong> Production deployment with documentation site.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Task</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>docs/spec.md</code></td>
+<td>Full project specification</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>docs/architecture.md</code></td>
+<td>System architecture + diagram</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>docs/decisions.md</code></td>
+<td>Key architectural decisions</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>docs/deployment.md</code></td>
+<td>Deployment guide</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>docs/setup.md</code></td>
+<td>Local development setup</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>docs/api.md</code></td>
+<td>API reference</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MKDocs setup</td>
+<td><code>mkdocs.yml</code> + Material theme</td>
+</tr>
+<tr>
+<td>8</td>
+<td>GitHub Pages deployment</td>
+<td>CI/CD step to build + publish docs</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Dockerfile (backend)</td>
+<td>Multi-stage Python build</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Dockerfile (frontend)</td>
+<td>Multi-stage Node build</td>
+</tr>
+<tr>
+<td>11</td>
+<td>docker-compose.yml</td>
+<td>Full stack: backend + frontend + PostgreSQL</td>
+</tr>
+<tr>
+<td>12</td>
+<td>GitHub Actions CI</td>
+<td>Lint + test on PR to <code>main</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>GitHub Actions CD</td>
+<td>Deploy frontend to Vercel, backend to Railway on merge to <code>main</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Deploy to production</td>
+<td>Vercel (frontend), Railway (backend), Neon (database)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>README.md</td>
+<td>Project overview, quick start, links to docs</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Make repo public</td>
+<td>Switch from private to public on GitHub (enables free branch protection rules)</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Branch protection rules</td>
+<td>Enable on <code>main</code>: require status checks (CI must pass), require branches up to date, no direct pushes. Must be done after task 12 (CI) so the status check exists to reference.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DoD:</strong> App deployed and accessible. CI/CD runs on PRs. Repo public with branch protection on <code>main</code>. Documentation site live on GitHub Pages.</p>
+<h2 id="8-deployment-architecture">8. Deployment Architecture<a class="headerlink" href="#8-deployment-architecture" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────────────────────┐
+│                      INTERNET                            │
+└─────┬────────────────────────┬───────────────────────────┘
+      │                        │
+┌─────▼─────┐           ┌──────▼──────┐
+│  Vercel   │           │   GitHub    │
+│ (Frontend)│           │   Pages     │
+│  Next.js  │           │  (Docs)     │
+└─────┬─────┘           └─────────────┘
+      │ API calls (CORS)
+┌─────▼─────┐
+│  Railway  │
+│ (Backend) │
+│  FastAPI  │
+└─────┬─────┘
+      │ DATABASE_URL (SSL)
+┌─────▼─────┐
+│   Neon    │
+│(Database) │
+│ PostgreSQL│
+└───────────┘
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Service</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend</td>
+<td>Vercel</td>
+<td>Next.js hosting, preview deployments</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>Railway</td>
+<td>FastAPI hosting, env var management</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>Neon</td>
+<td>Serverless PostgreSQL</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td>GitHub Pages</td>
+<td>MKDocs site</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>GitHub Actions</td>
+<td>Lint, test, build, deploy</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-deferred-features-future-enhancements">9. Deferred Features (Future Enhancements)<a class="headerlink" href="#9-deferred-features-future-enhancements" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full real-time WebSocket presence</td>
+<td>Deferred</td>
+<td>Foundation in Sprint 4, full impl if time</td>
+</tr>
+<tr>
+<td>File attachments on tasks</td>
+<td>Deferred</td>
+<td>Clean extension point</td>
+</tr>
+<tr>
+<td>Working hours精细 logic</td>
+<td>Deferred</td>
+<td>Basic indicator in Sprint 4</td>
+</tr>
+<tr>
+<td>OAuth/external auth providers</td>
+<td>Deferred</td>
+<td>Out of scope for v1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-branching-strategy">10. Branching Strategy<a class="headerlink" href="#10-branching-strategy" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>main
+  ├── feature/backend-foundation    (Sprint 1)
+  ├── feature/auth-frontend         (Sprint 2)
+  ├── feature/dashboard-assignments (Sprint 3)
+  ├── feature/timezones-polish      (Sprint 4)
+  └── feature/deploy-docs           (Sprint 5)
+</code></pre></div>
+<p>Each feature branch merges to <code>main</code> via PR. No <code>develop</code> integration branch — solo project, unnecessary ceremony.</p>
+<h2 id="11-development-methodology">11. Development Methodology<a class="headerlink" href="#11-development-methodology" title="Permanent link">&para;</a></h2>
+<h3 id="specification-driven-development-sdd">Specification-Driven Development (SDD)<a class="headerlink" href="#specification-driven-development-sdd" title="Permanent link">&para;</a></h3>
+<p>The project follows SDD — <code>docs/spec.md</code> is the single source of truth.
+Implementation follows the spec. Code is written to satisfy the specification,
+not the other way around.</p>
+<h3 id="test-driven-development-tdd-backend">Test-Driven Development (TDD) — Backend<a class="headerlink" href="#test-driven-development-tdd-backend" title="Permanent link">&para;</a></h3>
+<p>Backend development follows strict TDD:</p>
+<ol>
+<li><strong>Write the test first</strong> — define expected behavior via a failing test</li>
+<li><strong>Implement</strong> — write the minimum code to pass</li>
+<li><strong>Refactor</strong> — clean up while keeping tests green</li>
+</ol>
+<p><strong>Scope of backend TDD:</strong>
+- All API endpoints (happy path + error cases)
+- Service layer business logic
+- Model relationships and constraints
+- Auth middleware and role-based access</p>
+<p><strong>Tools:</strong> pytest, pytest-asyncio, httpx (async test client), factory_boy</p>
+<h3 id="behavior-focused-testing-frontend">Behavior-Focused Testing — Frontend<a class="headerlink" href="#behavior-focused-testing-frontend" title="Permanent link">&para;</a></h3>
+<p>Frontend tests use a BDD-inspired style without formal Gherkin/Cucumber.
+Tests describe <strong>user behavior</strong>, not implementation details.</p>
+<p><strong>Naming convention:</strong> test names describe the user's action and expected outcome.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Good (behavior-focused):</span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;allows a manager to create a task with a title and priority&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">})</span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;prevents a developer from creating tasks&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">})</span>
+
+<span class="c1">// Avoid (implementation-focused):</span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;renders TaskForm&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">})</span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;calls onSubmit handler&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+<p><strong>Scope of frontend tests (target: 30-50% coverage):</strong>
+- Custom hooks (useAuth, useTasks, etc.)
+- Form validation and submission logic
+- Role-based rendering (admin vs developer views)
+- Critical user flows (login, create task, assign developer)</p>
+<p><strong>Tools:</strong> Vitest, @testing-library/react, msw (API mocking)</p>
+<p><strong>Not tested:</strong>
+- CSS/Tailwind styling
+- Third-party library internals
+- Page layout composition</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
