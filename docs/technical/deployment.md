@@ -11,7 +11,7 @@ graph TB
     GitHubPages["GitHub Pages<br/>(MKDocs Docs)"]
 
     Browser -->|"HTTPS"| Vercel
-    Vercel -->|"API calls<br/>/api/*"| Railway
+    Browser -->|"NEXT_PUBLIC_API_URL<br/>direct to Railway"| Railway
     Railway -->|"DATABASE_URL<br/>(SSL)"| Neon
     Browser -->|"HTTPS"| GitHubPages
 ```
@@ -35,6 +35,7 @@ graph TB
     ```
     NEXT_PUBLIC_API_URL=https://<your-railway-backend-url>
     ```
+    The browser calls Railway directly — no Vercel proxy or rewrite is used.
 
 ## Backend (Railway)
 
