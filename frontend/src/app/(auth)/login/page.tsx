@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "@/lib/auth";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -25,8 +26,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-full max-w-sm rounded-lg bg-white p-8 shadow-md">
-      <h1 className="mb-6 text-center text-2xl font-bold">Sign In</h1>
+    <div className="flex w-full max-w-sm flex-col items-center">
+      <Image
+        src="/getdomus-logo.png"
+        alt="GetDomus logo"
+        width={160}
+        height={48}
+        className="mb-3 h-auto"
+        priority
+      />
+      <h1 className="mb-6 text-center text-xl font-semibold text-gray-800">
+        Team Task Manager
+      </h1>
+      <div className="w-full rounded-lg bg-white p-8 shadow-md">
+        <h2 className="mb-6 text-center text-2xl font-bold">Sign In</h2>
       {error && (
         <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-700">
           {error}
@@ -73,6 +86,7 @@ export default function LoginPage() {
           Register
         </Link>
       </p>
+      </div>
     </div>
   );
 }
