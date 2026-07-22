@@ -8,19 +8,11 @@ from backend.api.v1.tasks import router as tasks_router
 from backend.api.v1.presence import router as presence_router
 from backend.core.config import settings
 
-import logging
-
-logger = logging.getLogger(__name__)
-
 app = FastAPI(
     title="GetDomus Team Task Manager",
     description="Task management app for distributed engineering teams",
     version="0.1.0",
 )
-
-logger.warning("ALLOWED_ORIGINS debug: repr=%r type=%s", repr(settings.ALLOWED_ORIGINS), type(settings.ALLOWED_ORIGINS))
-for i, origin in enumerate(settings.ALLOWED_ORIGINS, 1):
-    logger.warning("Origin %d: %r", i, origin)
 
 app.add_middleware(
     CORSMiddleware,
