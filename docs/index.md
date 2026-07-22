@@ -2,6 +2,7 @@
 
 Task management app for distributed engineering teams. Supports multi-developer assignment, timezone awareness, and role-based access control.
 
+
 <!-- SCREENSHOT: dashboard-overview
      What to capture: Full dashboard showing stats cards, task list, sidebar navigation
      Suggested size: 1280x800
@@ -58,3 +59,4 @@ cd frontend && npm install && npm run dev
 Open [http://localhost:3000](http://localhost:3000)
 
 See the [full setup guide](technical/setup.md) for detailed instructions.
+
