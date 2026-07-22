@@ -12,6 +12,9 @@ node_modules/
 .next/
 out/
 
+# MKDocs build output
+site/
+
 # IDE
 .vscode/
 .idea/
