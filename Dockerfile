@@ -11,7 +11,13 @@ COPY backend ./backend
 COPY alembic.ini ./
 COPY alembic ./alembic
 
-RUN pip install --upgrade pip && pip install .
+RUN pip install --upgrade pip \
+    && pip install . \
+    && addgroup --system appgroup \
+    && adduser --system --ingroup appgroup appuser \
+    && chown -R appuser:appgroup /app
+
+USER appuser
 
 EXPOSE 8000
 
