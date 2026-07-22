@@ -36,7 +36,7 @@ This document outlines the assumptions made during development and their rationa
 
 **Assumption:** PostgreSQL is the target database for both development and production environments.
 
-**Rationale:** The specification lists PostgreSQL. SQLite is used only for automated tests to keep CI fast and dependency-free. Development uses Docker PostgreSQL for production parity. Production uses Neon (serverless PostgreSQL).
+**Rationale:** PostgreSQL was chosen by the specification for its strong relational integrity, native JSON/JSONB support, and production maturity. It handles the relational task–developer assignments while offering flexibility for future extensions. SQLite is used only for automated tests to keep CI fast and dependency-free. Development uses Docker PostgreSQL for production parity. Production uses Neon (serverless PostgreSQL).
 
 ## 7. GitHub as Source of Truth
 
@@ -44,8 +44,3 @@ This document outlines the assumptions made during development and their rationa
 
 **Rationale:** The specification asks for a Git repository link. GitHub Actions CI ensures all code on `main` has passed backend tests, frontend tests, and frontend build. Branch protection enforces this via required status checks.
 
-## 8. Single-Developer Submission
-
-**Assumption:** This is a single-developer submission. All code, documentation, and deployment was authored by one person.
-
-**Rationale:** The submission is an individual technical assessment. There is no team coordination or code review workflow required beyond the PR-based CI enforcement.

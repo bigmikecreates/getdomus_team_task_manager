@@ -1,8 +1,8 @@
 # API Reference
 
-> Interactive Swagger docs are available at: `<backend-url>/docs`
-
 **Base URL:** `https://getdomusteamtaskmanager-production.up.railway.app`
+
+Interactive Swagger docs are available at [https://getdomusteamtaskmanager-production.up.railway.app/docs](https://getdomusteamtaskmanager-production.up.railway.app/docs).
 
 **Authentication:** JWT Bearer token in `Authorization` header.
 
