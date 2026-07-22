@@ -32,7 +32,8 @@ export default function LoginPage() {
         alt="GetDomus logo"
         width={160}
         height={48}
-        className="mb-3 h-auto"
+        className="mb-3"
+        style={{ width: "auto", height: "auto" }}
         priority
       />
       <h1 className="mb-6 text-center text-xl font-semibold text-gray-800">
