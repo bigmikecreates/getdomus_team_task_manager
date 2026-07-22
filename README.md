@@ -1,17 +1,21 @@
+<div align="center">
+
 # GetDomus Team Task Manager
 
-> Task management app for distributed engineering teams. Supports multi-developer
+> Task management app for distributed engineering teams supporting multi-developer
 > assignment, timezone awareness, and role-based access control.
+</div>
 
+![Sign In Page](assets/screenshots/login-page.png)
 ![Dashboard](assets/screenshots/dashboard-overview.png)
 <!-- PLACEHOLDER: Replace with actual screenshot after deployment -->
 
 ## Live Demo
 
-🔗 **Frontend:** [https://getdomus-team-task-manager.vercel.app](https://getdomus-team-task-manager.vercel.app)
-🔧 **Backend:** [https://getdomusteamtaskmanager-production.up.railway.app](https://getdomusteamtaskmanager-production.up.railway.app)
-📖 **Documentation:** [https://bigmikecreates.github.io/getdomus_team_task_manager](https://bigmikecreates.github.io/getdomus_team_task_manager)
-🔑 **API Docs:** [Swagger UI](https://getdomusteamtaskmanager-production.up.railway.app/docs)
+- 🔗 **Frontend:** [https://getdomus-team-task-manager.vercel.app](https://getdomus-team-task-manager.vercel.app)
+- 🔧 **Backend:** [https://getdomusteamtaskmanager-production.up.railway.app](https://getdomusteamtaskmanager-production.up.railway.app)
+- 📖 **Documentation:** [https://bigmikecreates.github.io/getdomus_team_task_manager](https://bigmikecreates.github.io/getdomus_team_task_manager)
+- 🔑 **API Docs:** [Swagger UI](https://getdomusteamtaskmanager-production.up.railway.app/docs)
 
 ## Tech Stack
 
