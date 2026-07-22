@@ -1,7 +1,7 @@
 [project]
 name = "getdomus-team-task-manager"
 version = "0.1.0"
-description = "Task management app for distributed engineering teams"
+description = "Team Task Management App for GetDomus"
 requires-python = ">=3.14"
 dependencies = [
     "fastapi",
