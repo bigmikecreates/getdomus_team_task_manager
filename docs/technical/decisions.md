@@ -36,11 +36,13 @@
 
 **Why:** Tests run fast without Docker dependency. Production parity maintained in dev environment. CI stays lightweight.
 
-## 6. Next.js API Proxy
+## 6. Direct Browser-to-Backend API Calls
 
-**Decision:** Frontend proxies `/api/*` to backend via `next.config.ts` rewrites.
+**Decision:** Frontend calls Railway backend directly via `NEXT_PUBLIC_API_URL`, not through a Vercel proxy.
 
-**Why:** No CORS issues in development. Single origin for the browser. Clean URL structure (`/api/tasks` → `localhost:8000/api/tasks`).
+**Why:** Vercel's Next.js rewrite proxy returned `DNS_HOSTNAME_RESOLVED_PRIVATE` when forwarding to Railway. Direct browser calls bypass this issue entirely. The centralized `apiFetch` function in `api.ts` prepends the base URL to all requests, making the architecture transparent to the rest of the codebase.
+
+**Development fallback:** When `NEXT_PUBLIC_API_URL` is unset, requests default to `http://localhost:8000` for local development.
 
 ## 7. Shared Label Constants
 

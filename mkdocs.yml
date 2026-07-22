@@ -52,4 +52,5 @@ nav:
       - Deployment: technical/deployment.md
       - Architecture: technical/architecture.md
       - Decisions: technical/decisions.md
+      - Assumptions: technical/assumptions.md
       - API Reference: technical/api/reference.md

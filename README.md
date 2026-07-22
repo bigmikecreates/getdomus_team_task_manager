@@ -8,9 +8,10 @@
 
 ## Live Demo
 
-🔗 **Frontend:** [https://your-vercel-url.vercel.app](https://your-vercel-url.vercel.app)
+🔗 **Frontend:** [https://getdomus-team-task-manager.vercel.app](https://getdomus-team-task-manager.vercel.app)
+🔧 **Backend:** [https://getdomusteamtaskmanager-production.up.railway.app](https://getdomusteamtaskmanager-production.up.railway.app)
 📖 **Documentation:** [https://bigmikecreates.github.io/getdomus_team_task_manager](https://bigmikecreates.github.io/getdomus_team_task_manager)
-🔧 **API Docs:** [Swagger UI](https://your-railway-url.up.railway.app/docs)
+🔑 **API Docs:** [Swagger UI](https://getdomusteamtaskmanager-production.up.railway.app/docs)
 
 ## Tech Stack
 
@@ -48,7 +49,7 @@ graph TB
     Neon["Neon<br/>(PostgreSQL)"]
 
     Browser -->|"HTTPS"| Vercel
-    Vercel -->|"API /api/*"| Railway
+    Browser -->|"NEXT_PUBLIC_API_URL<br/>direct to Railway"| Railway
     Railway -->|"DATABASE_URL"| Neon
 ```
 
@@ -104,7 +105,7 @@ Open [http://localhost:3000](http://localhost:3000)
 # Backend — 111 tests (TDD)
 python -m pytest -v
 
-# Frontend — 27 tests (behavior-focused)
+# Frontend — 38 tests (behavior-focused)
 cd frontend && npm run test
 
 # Full build check
@@ -181,7 +182,7 @@ mkdocs serve
 | Repository + Service pattern | Testability — services tested with mock repos |
 | JWT with HTTPBearer | Simpler for SPA clients than OAuth2 flow |
 | SQLite for tests, PostgreSQL for dev | Fast tests without Docker; prod parity in dev |
-| Next.js API proxy | Single origin in dev; no CORS issues |
+| Direct browser-to-backend API | Browser calls Railway directly via `NEXT_PUBLIC_API_URL` |
 | `npm install` over `npm ci` in CI | Cross-platform lock file compatibility |
 
 See [Architectural Decisions](docs/technical/decisions.md) for full rationale.
