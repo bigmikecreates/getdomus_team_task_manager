@@ -35,3 +35,11 @@ class TaskRepository:
                 setattr(task, key, value)
         await self.session.flush()
         return task
+
+    async def delete(self, task_id: str) -> bool:
+        task = await self.get(task_id)
+        if task is None:
+            return False
+        await self.session.delete(task)
+        await self.session.flush()
+        return True

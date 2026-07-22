@@ -96,3 +96,47 @@ class TestDevelopersAPI:
         assert response.status_code == 200
         data = response.json()
         assert data["name"] == "New Name"
+
+    async def test_delete_developer_returns_200(self, client: AsyncClient):
+        await client.post(
+            "/api/auth/register",
+            json={"email": "admin3@example.com", "password": "password123", "role": "admin"},
+        )
+        login_resp = await client.post(
+            "/api/auth/login",
+            json={"email": "admin3@example.com", "password": "password123"},
+        )
+        token = login_resp.json()["access_token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
+        dev_resp = await client.post(
+            "/api/developers",
+            json={"name": "Delete Me", "email": "deleteme@example.com"},
+            headers=headers,
+        )
+        dev_id = dev_resp.json()["id"]
+
+        response = await client.delete(f"/api/developers/{dev_id}", headers=headers)
+        assert response.status_code == 200
+
+    async def test_delete_developer_not_found_returns_404(self, client: AsyncClient):
+        await client.post(
+            "/api/auth/register",
+            json={"email": "admin4@example.com", "password": "password123", "role": "admin"},
+        )
+        login_resp = await client.post(
+            "/api/auth/login",
+            json={"email": "admin4@example.com", "password": "password123"},
+        )
+        token = login_resp.json()["access_token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
+        response = await client.delete("/api/developers/nonexistent-id", headers=headers)
+        assert response.status_code == 404
+
+    async def test_delete_developer_requires_admin(self, client: AsyncClient):
+        token = await _register_and_login(client, "nonadmin2@example.com")
+        headers = {"Authorization": f"Bearer {token}"}
+
+        response = await client.delete("/api/developers/some-id", headers=headers)
+        assert response.status_code == 403

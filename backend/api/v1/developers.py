@@ -74,3 +74,16 @@ async def update_developer(
     if developer is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Developer not found")
     return developer
+
+
+@router.delete("/{developer_id}")
+async def delete_developer(
+    developer_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(require_role("admin")),
+):
+    service = DeveloperService(db)
+    result = await service.delete_developer(developer_id)
+    if not result:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Developer not found")
+    return {"message": "Developer deleted successfully"}

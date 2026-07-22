@@ -20,3 +20,6 @@ class DeveloperService:
 
     async def update_developer(self, developer_id: str, **kwargs) -> Developer | None:
         return await self.repo.update(developer_id, **kwargs)
+
+    async def delete_developer(self, developer_id: str) -> bool:
+        return await self.repo.delete(developer_id)

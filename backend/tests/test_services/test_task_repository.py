@@ -72,3 +72,19 @@ class TestTaskRepository:
         updated = await repo.update("nonexistent-id", title="Nope")
 
         assert updated is None
+
+    async def test_delete_task(self, db_session: AsyncSession):
+        repo = TaskRepository(db_session)
+        task = await repo.create(title="Delete Me")
+
+        result = await repo.delete(task.id)
+
+        assert result is True
+        found = await repo.get(task.id)
+        assert found is None
+
+    async def test_delete_nonexistent_task_returns_false(self, db_session: AsyncSession):
+        repo = TaskRepository(db_session)
+        result = await repo.delete("nonexistent-id")
+
+        assert result is False

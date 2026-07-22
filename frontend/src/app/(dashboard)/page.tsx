@@ -3,20 +3,7 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { dashboard, type DashboardOverview } from "@/lib/api";
-
-const statusLabels: Record<string, string> = {
-  todo: "To Do",
-  in_progress: "In Progress",
-  in_review: "In Review",
-  done: "Done",
-};
-
-const priorityLabels: Record<string, string> = {
-  low: "Low",
-  medium: "Medium",
-  high: "High",
-  critical: "Critical",
-};
+import { statusLabels, priorityLabels } from "@/lib/labels";
 
 const priorityBarColors: Record<string, string> = {
   low: "bg-gray-400",
@@ -193,21 +180,44 @@ export default function DashboardPage() {
           <h2 className="mb-3 text-sm font-semibold uppercase text-gray-500">
             Attention Required
           </h2>
-          <div className="flex flex-wrap gap-6 rounded-lg border border-amber-200 bg-amber-50 px-6 py-4">
-            {critical_tasks > 0 && (
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-red-500" />
-                <span className="text-sm font-medium text-gray-700">
-                  {critical_tasks} critical task{critical_tasks !== 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
-            {overdue_tasks > 0 && (
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-orange-500" />
-                <span className="text-sm font-medium text-gray-700">
-                  {overdue_tasks} overdue task{overdue_tasks !== 1 ? "s" : ""}
-                </span>
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-6 py-4">
+            <div className="flex flex-wrap gap-6">
+              {critical_tasks > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-red-500" />
+                  <span className="text-sm font-medium text-gray-700">
+                    {critical_tasks} critical task{critical_tasks !== 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {overdue_tasks > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-orange-500" />
+                  <span className="text-sm font-medium text-gray-700">
+                    {overdue_tasks} overdue task{overdue_tasks !== 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+            </div>
+            {data.critical_tasks_list && data.critical_tasks_list.length > 0 && (
+              <div className="mt-3 border-t border-amber-200 pt-3">
+                <ul className="space-y-1">
+                  {data.critical_tasks_list.map((task) => (
+                    <li key={task.id}>
+                      <Link
+                        href={`/tasks/${task.id}`}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
+                        {task.title}
+                      </Link>
+                      {task.due_date && (
+                        <span className="ml-2 text-xs text-gray-500">
+                          Due {new Date(task.due_date).toLocaleDateString()}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
@@ -249,7 +259,7 @@ export default function DashboardPage() {
                   {colTasks.slice(0, 5).map((task) => (
                     <Link
                       key={task.id}
-                      href={`/tasks/${task.id}/edit`}
+                      href={`/tasks/${task.id}`}
                       className="rounded border border-gray-200 bg-white p-2 text-xs hover:shadow-sm"
                     >
                       <span className="font-medium text-gray-900">
@@ -348,7 +358,7 @@ export default function DashboardPage() {
                     >
                       <td className="px-4 py-3">
                         <Link
-                          href={`/tasks/${task.id}/edit`}
+                          href={`/tasks/${task.id}`}
                           className="font-medium text-blue-600 hover:underline"
                         >
                           {task.title}
@@ -387,7 +397,7 @@ export default function DashboardPage() {
                     >
                       <td className="px-4 py-3">
                         <Link
-                          href={`/tasks/${task.id}/edit`}
+                          href={`/tasks/${task.id}`}
                           className="font-medium text-blue-600 hover:underline"
                         >
                           {task.title}

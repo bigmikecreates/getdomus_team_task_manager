@@ -38,5 +38,6 @@ class DashboardOverview(BaseModel):
     stats: DashboardStats
     overdue_tasks: int
     critical_tasks: int
+    critical_tasks_list: list[UpcomingTask]
     upcoming_tasks: list[UpcomingTask]
     recent_tasks: list[dict]

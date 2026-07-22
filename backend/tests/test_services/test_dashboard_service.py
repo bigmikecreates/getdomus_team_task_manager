@@ -150,3 +150,23 @@ class TestDashboardService:
         overview = await service.get_overview()
 
         assert len(overview["recent_tasks"]) == 3
+
+    async def test_overview_critical_tasks_list(self, db_session: AsyncSession):
+        service = DashboardService(db_session)
+
+        critical = Task(title="Critical One", priority=TaskPriority.CRITICAL)
+        critical_done = Task(
+            title="Critical Done",
+            priority=TaskPriority.CRITICAL,
+            status=TaskStatus.DONE,
+        )
+        high = Task(title="High One", priority=TaskPriority.HIGH)
+        db_session.add_all([critical, critical_done, high])
+        await db_session.flush()
+
+        overview = await service.get_overview()
+
+        assert "critical_tasks_list" in overview
+        assert len(overview["critical_tasks_list"]) == 1
+        assert overview["critical_tasks_list"][0]["title"] == "Critical One"
+        assert overview["critical_tasks_list"][0]["priority"] == "critical"

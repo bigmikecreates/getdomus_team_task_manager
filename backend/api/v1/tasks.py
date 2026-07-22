@@ -100,3 +100,16 @@ async def unassign_developer(
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Assignment not found")
     return {"message": "Developer unassigned successfully"}
+
+
+@router.delete("/{task_id}")
+async def delete_task(
+    task_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(require_role("admin", "manager")),
+):
+    service = TaskService(db)
+    result = await service.delete_task(task_id)
+    if not result:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+    return {"message": "Task deleted successfully"}

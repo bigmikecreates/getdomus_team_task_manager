@@ -64,6 +64,7 @@ export const handlers = [
       },
       overdue_tasks: 0,
       critical_tasks: 0,
+      critical_tasks_list: [],
       upcoming_tasks: [],
       recent_tasks: [],
     });

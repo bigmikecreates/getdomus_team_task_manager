@@ -85,6 +85,7 @@ export interface DashboardOverview {
   stats: DashboardStats;
   overdue_tasks: number;
   critical_tasks: number;
+  critical_tasks_list: UpcomingTask[];
   upcoming_tasks: UpcomingTask[];
   recent_tasks: RecentTask[];
 }
@@ -173,6 +174,8 @@ export const tasks = {
     apiFetch<Task>("/api/tasks", { method: "POST", body: JSON.stringify(data) }),
   update: (id: string, data: TaskUpdate) =>
     apiFetch<Task>(`/api/tasks/${id}`, { method: "PUT", body: JSON.stringify(data) }),
+  delete: (id: string) =>
+    apiFetch<{ message: string }>(`/api/tasks/${id}`, { method: "DELETE" }),
   assign: (id: string, developerIds: string[]) =>
     apiFetch<{ message: string }>(`/api/tasks/${id}/assign`, {
       method: "POST",
@@ -184,9 +187,21 @@ export const tasks = {
     }),
 };
 
+export interface DeveloperCreate {
+  name: string;
+  email: string;
+  timezone?: string;
+  working_hours_start?: string;
+  working_hours_end?: string;
+}
+
 export const developers = {
   list: () => apiFetch<DeveloperWithAvailability[]>("/api/developers"),
   get: (id: string) => apiFetch<Developer>(`/api/developers/${id}`),
+  create: (data: DeveloperCreate) =>
+    apiFetch<Developer>("/api/developers", { method: "POST", body: JSON.stringify(data) }),
+  delete: (id: string) =>
+    apiFetch<{ message: string }>(`/api/developers/${id}`, { method: "DELETE" }),
 };
 
 export const presence = {

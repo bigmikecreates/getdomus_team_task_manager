@@ -35,3 +35,11 @@ class DeveloperRepository:
                 setattr(developer, key, value)
         await self.session.flush()
         return developer
+
+    async def delete(self, developer_id: str) -> bool:
+        developer = await self.get(developer_id)
+        if developer is None:
+            return False
+        await self.session.delete(developer)
+        await self.session.flush()
+        return True

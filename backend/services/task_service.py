@@ -75,3 +75,11 @@ class TaskService:
         await self.session.delete(assignment)
         await self.session.flush()
         return True
+
+    async def delete_task(self, task_id: str) -> bool:
+        result = await self.session.execute(
+            select(TaskAssignment).where(TaskAssignment.task_id == task_id)
+        )
+        for assignment in result.scalars().all():
+            await self.session.delete(assignment)
+        return await self.repo.delete(task_id)
