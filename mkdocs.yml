@@ -1,0 +1,55 @@
+site_name: GetDomus Team Task Manager
+site_description: Task management app for distributed engineering teams
+site_url: https://bigmikecreates.github.io/getdomus_team_task_manager
+
+repo_name: bigmikecreates/getdomus_team_task_manager
+repo_url: https://github.com/bigmikecreates/getdomus_team_task_manager
+
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: blue
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - tables
+  - admonition
+  - pymdownx.details
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - User Guide:
+      - user-guide/index.md
+      - Manager: user-guide/manager.md
+      - Developer: user-guide/developer.md
+      - Admin: user-guide/admin.md
+      - Dashboard: user-guide/dashboard.md
+  - Technical Guide:
+      - technical/index.md
+      - Local Setup: technical/setup.md
+      - Testing: technical/testing.md
+      - Contributing: technical/contributing.md
+      - Deployment: technical/deployment.md
+      - Architecture: technical/architecture.md
+      - Decisions: technical/decisions.md
+      - API Reference: technical/api/reference.md
