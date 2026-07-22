@@ -10,7 +10,7 @@ const navItems = [
   { href: "/developers", label: "Developers" },
 ];
 
-export function Sidebar() {
+export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
@@ -18,7 +18,7 @@ export function Sidebar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <aside className="flex w-60 flex-col border-r border-gray-200 bg-white">
+    <aside className="flex h-full w-60 flex-col border-r border-gray-200 bg-white">
       <div className="border-b border-gray-200 p-4">
         <h1 className="text-lg font-bold text-gray-900">GetDomus</h1>
         <p className="text-xs text-gray-500">Task Manager</p>
@@ -36,6 +36,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={`mb-1 block rounded px-3 py-2 text-sm font-medium ${
                 isActive(item.href)
                   ? "bg-blue-50 text-blue-700"
@@ -53,7 +54,10 @@ export function Sidebar() {
           {user?.role}
         </p>
         <button
-          onClick={logout}
+          onClick={() => {
+            logout();
+            onNavigate?.();
+          }}
           className="mt-2 w-full rounded px-3 py-1.5 text-left text-xs text-gray-600 hover:bg-gray-100"
         >
           Sign out

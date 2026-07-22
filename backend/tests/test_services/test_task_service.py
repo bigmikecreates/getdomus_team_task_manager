@@ -77,3 +77,31 @@ class TestTaskService:
 
         assert result is not None
         assert len(result.developers) == 1
+
+    async def test_delete_task(self, db_session: AsyncSession):
+        service = TaskService(db_session)
+        task = await service.create_task(title="Delete Me")
+
+        result = await service.delete_task(task.id)
+
+        assert result is True
+        found = await service.get_task(task.id)
+        assert found is None
+
+    async def test_delete_nonexistent_task_returns_false(self, db_session: AsyncSession):
+        service = TaskService(db_session)
+        result = await service.delete_task("nonexistent-id")
+
+        assert result is False
+
+    async def test_delete_task_with_assignments(self, db_session: AsyncSession):
+        service = TaskService(db_session)
+        task = await service.create_task(title="Delete With Devs")
+        developer = Developer(name="Del Dev", email="deldev@example.com", timezone="UTC")
+        db_session.add(developer)
+        await db_session.flush()
+
+        await service.assign_developer(task.id, developer.id)
+        result = await service.delete_task(task.id)
+
+        assert result is True

@@ -58,3 +58,19 @@ class TestDeveloperRepository:
 
         assert updated is not None
         assert updated.name == "New Name"
+
+    async def test_delete_developer(self, db_session: AsyncSession):
+        repo = DeveloperRepository(db_session)
+        dev = await repo.create(name="Delete Me", email="deleteme@example.com")
+
+        result = await repo.delete(dev.id)
+
+        assert result is True
+        found = await repo.get(dev.id)
+        assert found is None
+
+    async def test_delete_nonexistent_developer_returns_false(self, db_session: AsyncSession):
+        repo = DeveloperRepository(db_session)
+        result = await repo.delete("nonexistent-id")
+
+        assert result is False

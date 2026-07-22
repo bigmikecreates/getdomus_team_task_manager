@@ -78,6 +78,25 @@ class DashboardService:
         )
         critical_tasks = critical_result.scalar()
 
+        critical_list_result = await self.session.execute(
+            select(Task)
+            .where(
+                Task.priority == TaskPriority.CRITICAL,
+                Task.status != TaskStatus.DONE,
+            )
+            .order_by(Task.created_at.desc())
+        )
+        critical_tasks_list = [
+            {
+                "id": str(t.id),
+                "title": t.title,
+                "status": t.status.value if hasattr(t.status, "value") else t.status,
+                "priority": t.priority.value if hasattr(t.priority, "value") else t.priority,
+                "due_date": t.due_date.isoformat() if t.due_date else None,
+            }
+            for t in critical_list_result.scalars().all()
+        ]
+
         upcoming_result = await self.session.execute(
             select(Task)
             .where(
@@ -118,6 +137,7 @@ class DashboardService:
             "stats": stats,
             "overdue_tasks": overdue_tasks,
             "critical_tasks": critical_tasks,
+            "critical_tasks_list": critical_tasks_list,
             "upcoming_tasks": upcoming_tasks,
             "recent_tasks": recent_tasks,
         }

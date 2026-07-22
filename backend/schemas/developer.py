@@ -32,7 +32,23 @@ class DeveloperResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
-class DeveloperWithAvailability(DeveloperResponse):
+class DeveloperAvailability(BaseModel):
+    is_online: bool
+    is_within_working_hours: bool
+    local_time: str
+
+
+class DeveloperWithAvailability(BaseModel):
+    id: str
+    name: str
+    email: str
+    timezone: str
+    working_hours_start: time | None = None
+    working_hours_end: time | None = None
+    created_at: datetime
+    updated_at: datetime
     is_online: bool = False
     is_within_working_hours: bool = False
     local_time: str = ""
+
+    model_config = {"from_attributes": True}

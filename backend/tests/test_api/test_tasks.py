@@ -136,3 +136,31 @@ class TestTasksAPI:
             headers=headers,
         )
         assert response.status_code == 200
+
+    async def test_delete_task_returns_200(self, client: AsyncClient):
+        token = await _register_and_login(client, "deleter@example.com")
+        headers = {"Authorization": f"Bearer {token}"}
+
+        create_resp = await client.post(
+            "/api/tasks",
+            json={"title": "Delete Me"},
+            headers=headers,
+        )
+        task_id = create_resp.json()["id"]
+
+        response = await client.delete(f"/api/tasks/{task_id}", headers=headers)
+        assert response.status_code == 200
+
+        get_resp = await client.get(f"/api/tasks/{task_id}", headers=headers)
+        assert get_resp.status_code == 404
+
+    async def test_delete_task_not_found_returns_404(self, client: AsyncClient):
+        token = await _register_and_login(client, "deleter2@example.com")
+        headers = {"Authorization": f"Bearer {token}"}
+
+        response = await client.delete("/api/tasks/nonexistent-id", headers=headers)
+        assert response.status_code == 404
+
+    async def test_delete_task_requires_auth(self, client: AsyncClient):
+        response = await client.delete("/api/tasks/some-id")
+        assert response.status_code in (401, 403)

@@ -65,7 +65,7 @@ export default function EditTaskPage() {
 
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", taskId] });
-      router.push("/");
+      router.push(`/tasks/${taskId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update task");
     }
@@ -81,7 +81,15 @@ export default function EditTaskPage() {
 
   return (
     <div className="mx-auto max-w-lg">
-      <h1 className="mb-6 text-2xl font-bold">Edit Task</h1>
+      <div className="mb-6">
+        <a
+          href={`/tasks/${taskId}`}
+          className="text-sm text-blue-600 hover:underline"
+        >
+          &larr; Task Details
+        </a>
+        <h1 className="mt-2 text-2xl font-bold">Edit Task</h1>
+      </div>
       {error && (
         <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-700">
           {error}
