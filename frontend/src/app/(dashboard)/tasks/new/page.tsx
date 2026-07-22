@@ -41,7 +41,7 @@ export default function NewTaskPage() {
         await assignDevs.mutateAsync(newTask.id);
       }
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      router.push("/");
+      router.push("/tasks");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create task");
     }
@@ -49,7 +49,15 @@ export default function NewTaskPage() {
 
   return (
     <div className="mx-auto max-w-lg">
-      <h1 className="mb-6 text-2xl font-bold">Create Task</h1>
+      <div className="mb-6">
+        <a
+          href="/tasks"
+          className="text-sm text-blue-600 hover:underline"
+        >
+          &larr; Tasks
+        </a>
+        <h1 className="mt-2 text-2xl font-bold">Create Task</h1>
+      </div>
       {error && (
         <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-700">
           {error}

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { tasks, type Task } from "@/lib/api";
+import { statusLabels, priorityLabels, statusOrder, priorityOrder } from "@/lib/labels";
 
 const statusColors: Record<string, string> = {
   todo: "bg-gray-100 text-gray-700",
@@ -22,6 +23,18 @@ const priorityColors: Record<string, string> = {
 const allStatuses = ["todo", "in_progress", "in_review", "done"];
 const allPriorities = ["low", "medium", "high", "critical"];
 
+type SortKey = "status" | "priority" | "due_date" | "assigned";
+type SortDir = "asc" | "desc";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  if (!active) return <span className="ml-1 text-gray-300">&#8597;</span>;
+  return (
+    <span className="ml-1 text-blue-600">
+      {dir === "asc" ? "\u25B2" : "\u25BC"}
+    </span>
+  );
+}
+
 function TaskRow({ task }: { task: Task }) {
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
@@ -32,7 +45,7 @@ function TaskRow({ task }: { task: Task }) {
       </td>
       <td className="px-4 py-3">
         <Link
-          href={`/tasks/${task.id}/edit`}
+          href={`/tasks/${task.id}`}
           className="font-medium text-blue-600 hover:underline"
         >
           {task.title}
@@ -42,13 +55,13 @@ function TaskRow({ task }: { task: Task }) {
         <span
           className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[task.status] || ""}`}
         >
-          {task.status.replace("_", " ")}
+          {statusLabels[task.status] || task.status}
         </span>
       </td>
       <td
         className={`px-4 py-3 text-sm font-medium ${priorityColors[task.priority] || ""}`}
       >
-        {task.priority}
+        {priorityLabels[task.priority] || task.priority}
       </td>
       <td className="px-4 py-3 text-sm text-gray-500">
         {task.due_date
@@ -75,25 +88,63 @@ export default function TaskListPage() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
+  const [sortKey, setSortKey] = useState<SortKey | null>(null);
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["tasks"],
     queryFn: () => tasks.list(),
   });
 
-  const filteredTasks = (data?.tasks || []).filter((task) => {
-    if (statusFilter !== "all" && task.status !== statusFilter) return false;
-    if (priorityFilter !== "all" && task.priority !== priorityFilter) return false;
-    if (search) {
-      const q = search.toLowerCase();
-      const matchesTitle = task.title.toLowerCase().includes(q);
-      const matchesDev = task.developers.some((d) =>
-        d.name.toLowerCase().includes(q)
-      );
-      if (!matchesTitle && !matchesDev) return false;
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir(sortDir === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
     }
-    return true;
-  });
+  };
+
+  const filteredTasks = useMemo(() => {
+    const filtered = (data?.tasks || []).filter((task) => {
+      if (statusFilter !== "all" && task.status !== statusFilter) return false;
+      if (priorityFilter !== "all" && task.priority !== priorityFilter) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        const matchesTitle = task.title.toLowerCase().includes(q);
+        const matchesDev = task.developers.some((d) =>
+          d.name.toLowerCase().includes(q)
+        );
+        if (!matchesTitle && !matchesDev) return false;
+      }
+      return true;
+    });
+
+    if (!sortKey) return filtered;
+
+    return [...filtered].sort((a, b) => {
+      let cmp = 0;
+      switch (sortKey) {
+        case "status":
+          cmp = statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+          break;
+        case "priority":
+          cmp = priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+          break;
+        case "due_date": {
+          if (!a.due_date && !b.due_date) cmp = 0;
+          else if (!a.due_date) cmp = 1;
+          else if (!b.due_date) cmp = -1;
+          else cmp = new Date(a.due_date).getTime() - new Date(b.due_date).getTime();
+          break;
+        }
+        case "assigned":
+          cmp = a.developers.length - b.developers.length;
+          break;
+      }
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+  }, [data?.tasks, statusFilter, priorityFilter, search, sortKey, sortDir]);
 
   return (
     <div>
@@ -123,7 +174,7 @@ export default function TaskListPage() {
           <option value="all">All Statuses</option>
           {allStatuses.map((s) => (
             <option key={s} value={s}>
-              {s.replace("_", " ")}
+              {statusLabels[s]}
             </option>
           ))}
         </select>
@@ -135,17 +186,31 @@ export default function TaskListPage() {
           <option value="all">All Priorities</option>
           {allPriorities.map((p) => (
             <option key={p} value={p}>
-              {p}
+              {priorityLabels[p]}
             </option>
           ))}
         </select>
       </div>
 
-      {isLoading && <p className="text-sm text-gray-500">Loading tasks...</p>}
+      {isLoading && (
+        <div className="space-y-3">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-12 animate-pulse rounded bg-gray-100" />
+          ))}
+        </div>
+      )}
       {error && (
-        <p className="text-sm text-red-600">
-          {error instanceof Error ? error.message : "Failed to load tasks"}
-        </p>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+          <p className="text-sm text-red-600">
+            {error instanceof Error ? error.message : "Failed to load tasks"}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-2 text-sm font-medium text-red-700 hover:underline"
+          >
+            Retry
+          </button>
+        </div>
       )}
 
       {data && (
@@ -155,10 +220,30 @@ export default function TaskListPage() {
               <tr>
                 <th className="px-4 py-3 font-medium">ID</th>
                 <th className="px-4 py-3 font-medium">Title</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Priority</th>
-                <th className="px-4 py-3 font-medium">Due Date</th>
-                <th className="px-4 py-3 font-medium">Assigned</th>
+                <th
+                  className="cursor-pointer select-none px-4 py-3 font-medium hover:text-blue-600"
+                  onClick={() => handleSort("status")}
+                >
+                  Status <SortIcon active={sortKey === "status"} dir={sortDir} />
+                </th>
+                <th
+                  className="cursor-pointer select-none px-4 py-3 font-medium hover:text-blue-600"
+                  onClick={() => handleSort("priority")}
+                >
+                  Priority <SortIcon active={sortKey === "priority"} dir={sortDir} />
+                </th>
+                <th
+                  className="cursor-pointer select-none px-4 py-3 font-medium hover:text-blue-600"
+                  onClick={() => handleSort("due_date")}
+                >
+                  Due Date <SortIcon active={sortKey === "due_date"} dir={sortDir} />
+                </th>
+                <th
+                  className="cursor-pointer select-none px-4 py-3 font-medium hover:text-blue-600"
+                  onClick={() => handleSort("assigned")}
+                >
+                  Assigned <SortIcon active={sortKey === "assigned"} dir={sortDir} />
+                </th>
               </tr>
             </thead>
             <tbody>
