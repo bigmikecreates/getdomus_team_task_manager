@@ -3,13 +3,6 @@
 > Auto-generated from FastAPI's OpenAPI schema.
 > Run `python scripts/generate_api_docs.py` to regenerate (requires running backend server).
 
-<!-- SCREENSHOT: swagger-ui
-     What to capture: Swagger UI showing interactive API docs at /docs
-     Suggested size: 1280x800
--->
-
-![Swagger UI](../../screenshots/swagger-ui.png)
-
 Interactive docs available at: `<backend-url>/docs`
 
 ## Overview
